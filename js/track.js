@@ -10,6 +10,9 @@ const parliamentPolygon = [
 	{ x: -86.62104547049205, y: -115.70710236449086 }
 	// then back to the start
 ];
+const simpleParliament = [ ...parliamentPolygon ];
+simpleParliament.splice(6, 1);
+simpleParliament.splice(1, 1);
 
 export function parliamentDistance(p) {
 	const d = sdf(p, parliamentPolygon);
@@ -18,6 +21,13 @@ export function parliamentDistance(p) {
 }
 export function parliamentNormal(p) {
 	return normal(p, parliamentPolygon);
+}
+
+export function simpleParliamentDistance(p) {
+	return sdf(p, simpleParliament);
+}
+export function simpleParliamentNormal(p) {
+	return normal(p, simpleParliament);
 }
 
 // https://github.com/substack/point-in-polygon/blob/master/index.js

@@ -1,11 +1,12 @@
 import { scene, onFrame } from './init.js';
 import Kart from './Kart.js';
 import pad from './gamepad.js';
+import { parliamentDistance } from './track.js';
 
-const acceleration = 1,
+const acceleration = 0.8,
 	reverseAcceleration = -0.5,
 	brakePower = 0.1,
-	steer = 0.01,
+	steer = 0.008,
 	tau = Math.PI * 2;
 
 class Button {
@@ -78,6 +79,10 @@ export default class Player extends Kart {
 			camera.position.y = 2.5;
 			camera.lookAt(this.position);
 			camera.position.y += 1;
+
+			// debug:
+			// console.log('Current distance:', parliamentDistance({
+			// 	x: this.position.x, y: this.position.z }));
 		});
 
 	}

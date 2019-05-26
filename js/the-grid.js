@@ -1,5 +1,5 @@
 import { scene, onFrame } from './init.js';
-import Kart from './Kart.js';
+import Enemy from './ai.js';
 import Player from './Player.js';
 import pad from './gamepad.js';
 
@@ -7,7 +7,8 @@ export const karts = [];
 export const player = new Player();
 
 for (let i = 0; i < 8; ++i) {
-	const kart = (i == 7) ? player : new Kart();
+	// if (i % 7) continue; // debug - one ai
+	const kart = (i == 7) ? player : new Enemy();
 	kart.position.x = 75 - (i & 1) * 5;
 	kart.position.z = -5 - i * 5;
 	kart.angle = Math.PI * 0.5;
@@ -18,6 +19,7 @@ for (let i = 0; i < 8; ++i) {
 			const a = karts[i];
 			for (let j = i + 1; j < 8; ++j) {
 				const b = karts[j];
+				// if (!b) continue; // for debug mode
 				const dx = a.position.x - b.position.x,
 					dy = a.position.z - b.position.z,
 					ds = dx * dx + dy * dy;
