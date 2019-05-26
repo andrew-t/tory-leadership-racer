@@ -1,9 +1,10 @@
-import { onFrame } from './init.js'
+import { onFrame } from './init.js';
 import { DirectionalSprite } from './Sprite.js';
 import { parliamentDistance, parliamentNormal } from './track.js';
 
 const coastFriction = 0.8,
-	driftFriction = 0.12;
+	driftFriction = 0.12,
+	tau = Math.PI * 2;
 
 export default class Kart extends DirectionalSprite {
 	constructor() {
@@ -11,6 +12,10 @@ export default class Kart extends DirectionalSprite {
 		this.setSize(2);
 		this.position.y = 1;
 		this.speed = { x: 0, y: 0 };
+
+		this.lapListeners = [];
+		this.unlaps = 1; // cross the start line once to start lap 1
+		this.lastTheta = 0.9; // you start just behind the line
 
 		this.drive = 0; // 0 = no acceleration, +ve = forwards, -ve = backwards
 		this.brake = 1; // 1 = no brake, 0 = immediate stop
@@ -47,6 +52,27 @@ export default class Kart extends DirectionalSprite {
 			const pos = { x: this.position.x, y: this.position.z };
 			const d = parliamentDistance(pos) - 1;
 			if (d < 0) this.collide(d, parliamentNormal(pos));
+
+			const theta = ((Math.atan2(this.position.z, this.position.x) + tau) / tau) % 1;
+			if ((this.lastTheta > 0.8 || this.lastTheta < 0.2) &&
+				(theta > 0.8 || theta < 0.2)) {
+				// we're somewhere near the finish line
+				if (this.lastTheta > 0.5 && theta < 0.5) {
+					if (this.unlaps) {
+						--this.unlaps;
+						console.log('Did a lap but didn’t count it. You now owe',
+							this.unlaps, 'laps');
+					} else {
+						this.lapListeners.forEach(l => l());
+						console.log('Did a lap!');
+					}
+				} else if (this.lastTheta < 0.5 && theta > 0.5) {
+					++this.unlaps;
+					console.log('Did a lap backwards. You now owe',
+						this.unlaps, 'laps');
+				}
+			}
+			this.lastTheta = theta;
 		});
 	}
 
