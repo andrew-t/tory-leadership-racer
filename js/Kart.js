@@ -46,18 +46,19 @@ export default class Kart extends DirectionalSprite {
 			// oh, and you can hit buildings
 			const pos = { x: this.position.x, y: this.position.z };
 			const d = parliamentDistance(pos) - 1;
-			if (d < 0) {
-				this.speed.x *= 0.3;
-				this.speed.y *= 0.3;
-				const n = parliamentNormal(pos);
-				this.position.x += n.x * (0.01 - d * 1.5);
-				this.position.z += n.y * (0.01 - d * 1.5);
-			}
+			if (d < 0) this.collide(d, parliamentNormal(pos));
 		});
 	}
 
 	face(x, y) {
 		this.angle = Math.atan2(this.facing.y, this.facing.x);
+	}
+
+	collide(d, normal) {
+		this.speed.x *= 0.3;
+		this.speed.y *= 0.3;
+		this.position.x += normal.x * (0.01 - d * 1.5);
+		this.position.z += normal.y * (0.01 - d * 1.5);
 	}
 
 	driveVector() {

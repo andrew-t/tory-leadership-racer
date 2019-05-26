@@ -13,21 +13,20 @@ const parliamentPolygon = [
 
 export function parliamentDistance(p) {
 	const d = sdf(p, parliamentPolygon);
-	if (d < 0)
-		console.warn('Kart in Parliament');
+	if (d < 0) console.warn('Kart in Parliament');
 	return d;
 }
 export function parliamentNormal(p) {
 	return normal(p, parliamentPolygon);
 }
 
+// https://github.com/substack/point-in-polygon/blob/master/index.js
 function pointInPolygon(p, poly) {
 	let inPolygon = false;
-	for (const [ a, b ] of lines(poly)) {
+	for (const [ a, b ] of lines(poly))
 		if (((a.y > p.y) != (b.y > p.y))
             && (p.x < (b.x - a.x) * (p.y - a.y) / (b.y - a.y) + a.x))
 			inPolygon = !inPolygon;
-	}
 	return inPolygon;
 }
 
@@ -72,11 +71,12 @@ function* lines(poly) {
 function sqr(x) { return x * x }
 function dist2(v, w) { return sqr(v.x - w.x) + sqr(v.y - w.y) }
 function distToSegmentSquared(p, v, w) {
-  var l2 = dist2(v, w);
-  if (l2 == 0) return dist2(p, v);
-  var t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;
-  t = Math.max(0, Math.min(1, t));
-  return dist2(p, { x: v.x + t * (w.x - v.x),
-                    y: v.y + t * (w.y - v.y) });
+	var l2 = dist2(v, w);
+	if (l2 == 0) return dist2(p, v);
+	var t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;
+	t = Math.max(0, Math.min(1, t));
+	return dist2(p, {
+		x: v.x + t * (w.x - v.x),
+		y: v.y + t * (w.y - v.y)
+	});
 }
-function distToSegment(p, v, w) { return Math.sqrt(distToSegmentSquared(p, v, w)); }
