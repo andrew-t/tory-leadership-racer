@@ -1,5 +1,6 @@
 import { onFrame } from './init.js'
 import { DirectionalSprite } from './Sprite.js';
+import { parliamentDistance, parliamentNormal } from './track.js';
 
 const coastFriction = 0.8,
 	driftFriction = 0.12;
@@ -26,6 +27,10 @@ export default class Kart extends DirectionalSprite {
 			// braking and friction
 			this.coast = dot(this.speed, this.forward);
 			this.drift = dot(this.speed, this.left);
+			if (this.drive == 0) {
+				if (Math.abs(this.coast) < 0.01) this.coast = 0;
+				if (Math.abs(this.drift) < 0.01) this.drift = 0;
+			}
 			// console.log('total braking', Math.pow(coastFriction * this.brake, delta))
 			this.speed = addVec(
 				vecByScal(this.forward,
@@ -37,6 +42,17 @@ export default class Kart extends DirectionalSprite {
 			// and finally movement
 			this.position.x += this.speed.x;
 			this.position.z += this.speed.y;
+
+			// oh, and you can hit buildings
+			const pos = { x: this.position.x, y: this.position.z };
+			const d = parliamentDistance(pos) - 1;
+			if (d < 0) {
+				this.speed.x *= 0.3;
+				this.speed.y *= 0.3;
+				const n = parliamentNormal(pos);
+				this.position.x += n.x * (0.01 - d * 1.5);
+				this.position.z += n.y * (0.01 - d * 1.5);
+			}
 		});
 	}
 

@@ -26,7 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	let parliament;
 	const loadingManager = new THREE.LoadingManager(() => scene.add(parliament)),
 		loader = new THREE.ColladaLoader(loadingManager);
-	loader.load( '../res/parliament/parliament.dae', collada => parliament = collada.scene);
+	loader.load( '../res/parliament/parliament.dae', collada =>
+		parliament = collada.scene);
 
 	const textureLoader = new THREE.TextureLoader();
 	const floorTexture = textureLoader.load('../res/road1.jpg');

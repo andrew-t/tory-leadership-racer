@@ -21,6 +21,7 @@ function update() {
 	gamepad.accelerate = i.buttons[0].pressed;
 	gamepad.brake = i.buttons[1].pressed;
 	gamepad.fire = i.buttons[2].pressed;
+	gamepad.y = i.buttons[3].pressed;
 }
 
 function deadZone(n) {
