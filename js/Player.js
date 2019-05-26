@@ -4,7 +4,8 @@ import pad from './gamepad.js';
 
 const acceleration = 1,
 	reverseAcceleration = -0.5,
-	brakePower = 0.1;
+	brakePower = 0.1,
+	tau = Math.PI * 2;
 
 class Button {
 	constructor(player) {
@@ -31,6 +32,9 @@ export default class Player extends Kart {
 		this.brakeButton = new Button(this);
 		this.fireButton = new Button(this);
 		this.yButton = new Button(this);
+		this.lapListeners = [];
+		this.unlaps = 1; // cross the start line once to start lap 1
+		this.lastTheta = 0.9; // you start just behind the line
 
 		onFrame((scene, camera, delta) => {
 			this.moving = this.coast > 0.01;
@@ -66,6 +70,27 @@ export default class Player extends Kart {
 			this.lastBrake = pad.brake;
 			this.lastFire = pad.fire;
 			this.lastY = pad.y;
+
+			const theta = ((Math.atan2(this.position.z, this.position.x) + tau) / tau) % 1;
+			if ((this.lastTheta > 0.8 || this.lastTheta < 0.2) &&
+				(theta > 0.8 || theta < 0.2)) {
+				// we're somewhere near the finish line
+				if (this.lastTheta > 0.5 && theta < 0.5) {
+					if (this.unlaps) {
+						--this.unlaps;
+						console.log('Did a lap but didn’t count it. You now owe',
+							this.unlaps, 'laps');
+					} else {
+						this.lapListeners.forEach(l => l());
+						console.log('Did a lap!');
+					}
+				} else if (this.lastTheta < 0.5 && theta > 0.5) {
+					++this.unlaps;
+					console.log('Did a lap backwards. You now owe',
+						this.unlaps, 'laps');
+				}
+			}
+			this.lastTheta = theta;
 
 			this.steering = pad.stick.x * 0.01;
 			// position camera 8m behind the player and 3.5m above them,

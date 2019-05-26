@@ -57,7 +57,7 @@ function udf(p, poly) {
 		if (lDSqr < dSqr) dSqr = lDSqr;
 	}
 	const d = Math.sqrt(dSqr);
-	console.log('Distance to edge of Parliament:', d);
+	// console.log('Distance to edge of Parliament:', d);
 	return d;
 }
 
