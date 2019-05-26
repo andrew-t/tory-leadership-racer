@@ -1,14 +1,14 @@
 import { onFrame } from './init.js'
 import { DirectionalSprite } from './Sprite.js';
 
-const coastFriction = 0.999,
-	driftFriction = 0.950;
+const coastFriction = 0.8,
+	driftFriction = 0.12;
 
 export default class Kart extends DirectionalSprite {
 	constructor() {
 		super('res/test-sprite.png', 2, 4);
-		this.setSize(20);
-		this.position.y = 10;
+		this.setSize(2);
+		this.position.y = 1;
 		this.speed = { x: 0, y: 0 };
 
 		this.drive = 0; // 0 = no acceleration, +ve = forwards, -ve = backwards
@@ -16,23 +16,27 @@ export default class Kart extends DirectionalSprite {
 		this.steering = 0; // 0 = no steer, +ve = left, -ve = right
 		onFrame((scene, camera, delta) => {
 			// acceleration
-			const forward = {
-					x: Math.cos(this.angle),
-					y: Math.sin(this.angle)
-				},
-				left = { x: -forward.y, y: forward.x };
-			this.speed.x += this.drive * forward.x * delta;
-			this.speed.y += this.drive * forward.y * delta;
+			this.forward = {
+				x: Math.cos(this.angle),
+				y: Math.sin(this.angle)
+			};
+			this.left = { x: -this.forward.y, y: this.forward.x };
+			this.speed.x += this.drive * this.forward.x * delta;
+			this.speed.y += this.drive * this.forward.y * delta;
 			// braking and friction
-			const coast = dot(this.speed, forward),
-				drift = dot(this.speed, left);
+			this.coast = dot(this.speed, this.forward);
+			this.drift = dot(this.speed, this.left);
+			// console.log('total braking', Math.pow(coastFriction * this.brake, delta))
 			this.speed = addVec(
-				vecByScal(forward,
-					coast * Math.pow(coastFriction * this.brake, delta)),
-				vecByScal(left,
-					drift * Math.pow(driftFriction, delta)));
-			// steering
-			this.angle += this.steering * coast;
+				vecByScal(this.forward,
+					this.coast * Math.pow(coastFriction * this.brake, delta)),
+				vecByScal(this.left,
+					this.drift * Math.pow(driftFriction, delta)));
+			// steering - kind of a turning circle but you can also spin slightly on the spot
+			this.angle += this.steering * (1 + this.coast);
+			// and finally movement
+			this.position.x += this.speed.x;
+			this.position.z += this.speed.y;
 		});
 	}
 

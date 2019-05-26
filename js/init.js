@@ -5,6 +5,8 @@ export const scene = new THREE.Scene();
 export const clock = new THREE.Clock();
 export const renderer = new THREE.WebGLRenderer();
 
+const maxDelta = 0.1;
+
 const frameCallbacks = [];
 export function onFrame(callback) {
 	frameCallbacks.unshift(callback);
@@ -53,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function render() {
-	const delta = clock.getDelta();
+	const delta = Math.min(clock.getDelta(), maxDelta);
 	for (const c of frameCallbacks)
 		c(scene, camera, delta);
 	renderer.render(scene, camera);
