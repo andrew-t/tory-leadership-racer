@@ -11,3 +11,44 @@ body {
 	width: 100vw;
 	height: 100vh;
 }
+
+#leaning {
+	position: absolute;
+	left: calc(10vw - 0.2vmin);
+	top: 5vh;
+	width: 80vw;
+	height: 5vh;
+	border: 0.2vmin solid white;
+	background: black;
+}
+#leaning .title {
+	position: absolute;
+	top: -5vh;
+	color: yellow;
+}
+#left-wing, #right-wing {
+	width: 40vw;
+	height: 5vh;
+	position: absolute;
+	top: 0;
+}
+
+#left-wing {
+	left: 0;
+	background: red;
+	transform-origin: 100% 50%;
+}
+#right-wing {
+	right: 0;
+	background: blue;
+	transform-origin: 0 50%;
+}
+
+#placings {
+	position: absolute;
+	top: 15vh;
+	left: 5vw;
+	color: white;
+	font-family: sans-serif;
+	font-weight: bold;
+}

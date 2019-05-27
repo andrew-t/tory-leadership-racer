@@ -1,6 +1,9 @@
 import { onFrame } from './init.js';
 import { DirectionalSprite } from './Sprite.js';
-import { parliamentDistance, parliamentNormal } from './track.js';
+import {
+	parliamentDistance, parliamentNormal,
+	simpleParliamentDistance, simpleParliamentNormal
+} from './track.js';
 
 const coastFriction = 0.8,
 	driftFriction = 0.12,
@@ -15,6 +18,7 @@ export default class Kart extends DirectionalSprite {
 
 		this.lapListeners = [];
 		this.unlaps = 1; // cross the start line once to start lap 1
+		this.laps = 0;
 		this.lastTheta = 0.9; // you start just behind the line
 
 		this.drive = 0; // 0 = no acceleration, +ve = forwards, -ve = backwards
@@ -53,6 +57,10 @@ export default class Kart extends DirectionalSprite {
 			const d = parliamentDistance(pos) - 1;
 			if (d < 0) this.collide(d, parliamentNormal(pos));
 
+			// imaginary outer-building!
+			const d2 = 40 - simpleParliamentDistance(pos);
+			if (d2 < 0) this.collide(d2, neg(simpleParliamentNormal(pos)));
+
 			const theta = ((Math.atan2(this.position.z, this.position.x) + tau) / tau) % 1;
 			if ((this.lastTheta > 0.8 || this.lastTheta < 0.2) &&
 				(theta > 0.8 || theta < 0.2)) {
@@ -63,7 +71,8 @@ export default class Kart extends DirectionalSprite {
 						console.log('Did a lap but didn’t count it. You now owe',
 							this.unlaps, 'laps');
 					} else {
-						this.lapListeners.forEach(l => l());
+						++this.laps;
+						this.lapListeners.forEach(l => l(this.laps));
 						console.log('Did a lap!');
 					}
 				} else if (this.lastTheta < 0.5 && theta > 0.5) {
@@ -81,10 +90,14 @@ export default class Kart extends DirectionalSprite {
 	}
 
 	collide(d, normal) {
-		this.speed.x *= 0.3;
-		this.speed.y *= 0.3;
-		this.position.x += normal.x * (0.01 - d * 1.5);
-		this.position.z += normal.y * (0.01 - d * 1.5);
+		const abnormal = { x: normal.y, y: -normal.x },
+			glance = dot(this.speed, abnormal),
+			headOn = dot(this.speed, normal);
+		this.speed = addVec(
+			vecByScal(abnormal, glance * 0.8),
+			vecByScal(normal, headOn * -0.4));
+		this.position.x += normal.x * (0.01 - d * 1.05);
+		this.position.z += normal.y * (0.01 - d * 1.05);
 	}
 
 	driveVector() {
@@ -93,6 +106,10 @@ export default class Kart extends DirectionalSprite {
 			0,
 			Math.sin(this.angle)
 		);
+	}
+
+	onLap(cb) {
+		this.lapListeners.push(cb);
 	}
 }
 
@@ -104,4 +121,7 @@ function vecByScal(v, s) {
 }
 function addVec(a, b) {
 	return { x: a.x + b.x, y: a.y + b.y };
+}
+function neg(v) {
+	return { x: -v.x, y: -v.y };
 }

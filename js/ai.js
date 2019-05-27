@@ -11,12 +11,19 @@ const acceleration = 1.5, // faster than player kart
 export default class Enemy extends Kart {
 	constructor() {
 		super();
-		this.preferredDistance = Math.random() * 10 + 20;
+		this.preferredDistance = Math.random() * 15 + 5;
+		this.lookAheadDistance = Math.random() * 20 + 10;
+		this.preferredSpeedSquared = Math.random() * 2.5 + 1;
+		this.preferredCorneringSpeedSquared = Math.random() * 1.5 + 0.8;
+		this.steeriness = Math.random() * 0.6 + 0.2;
+
 		onFrame(() => {
 			const pos = { x: this.position.x, y: this.position.z },
 				left = simpleParliamentNormal(pos),
 				forwards = { x: -left.y, y: left.x },
-				distance = simpleParliamentDistance(pos),
+				soonPos = { x: pos.x + forwards.x * this.lookAheadDistance,
+					y: pos.y + forwards.y * this.lookAheadDistance },
+				distance = simpleParliamentDistance(soonPos),
 				dDistance = this.preferredDistance - distance,
 				speedSquared = this.speed.x * this.speed.x
 					+ this.speed.y * this.speed.y;
@@ -25,20 +32,20 @@ export default class Enemy extends Kart {
 			else if (dDistance > 5) desiredAngle -= 0.3;
 			else desiredAngle -= dDistance * 0.2;
 			const dTheta = (desiredAngle - this.angle + tau * 5.5) % tau - Math.PI;
-			this.steering = dTheta * 0.5;
+			this.steering = dTheta * this.steeriness;
 			// while (this.steering < Math.PI) this.steering += tau;
 			// this.steering %= tau;
-			this.drive = speedSquared < 0.4 ? acceleration : 0;
+			this.drive = speedSquared < this.preferredSpeedSquared ? acceleration : 0;
 			this.brake = 1;
 			if (this.steering > steer) {
 				this.steering = steer;
-				if (speedSquared > 0.4) {
+				if (speedSquared > this.preferredCorneringSpeedSquared) {
 					this.drive = 0;
 					this.brake = brakePower;
 				}
 			} else if (this.steering < -steer) {
 				this.steering = -steer;
-				if (speedSquared > 0.4) {
+				if (speedSquared > this.preferredCorneringSpeedSquared) {
 					this.drive = 0;
 					this.brake = brakePower;
 				}
@@ -51,6 +58,9 @@ export default class Enemy extends Kart {
 			// 	drive: this.drive,
 			// 	brake: this.brake
 			// })
+		});
+		this.onLap(laps => {
+			console.log(`That's ${laps} laps for this kart.`, this);
 		});
 	}
 }

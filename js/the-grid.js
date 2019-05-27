@@ -9,7 +9,7 @@ export const player = new Player();
 for (let i = 0; i < 8; ++i) {
 	// if (i % 7) continue; // debug - one ai
 	const kart = (i == 7) ? player : new Enemy();
-	kart.position.x = 75 - (i & 1) * 5;
+	kart.position.x = 85 - (i & 1) * 5;
 	kart.position.z = -5 - i * 5;
 	kart.angle = Math.PI * 0.5;
 	kart.addToScene(scene);

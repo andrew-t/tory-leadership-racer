@@ -1,5 +1,5 @@
 // this is all very spuriously precise:
-const parliamentPolygon = [
+export const parliamentPolygon = [
 	{ x: -94.49362816138596, y: -11.077542017590646 },
 	{ x: -47.069362056543355, y: -6.935344410421979 },
 	{ x: -58.0873395176439, y: 121.89917536688797 },
@@ -10,7 +10,7 @@ const parliamentPolygon = [
 	{ x: -86.62104547049205, y: -115.70710236449086 }
 	// then back to the start
 ];
-const simpleParliament = [ ...parliamentPolygon ];
+export const simpleParliament = [ ...parliamentPolygon ];
 simpleParliament.splice(6, 1);
 simpleParliament.splice(1, 1);
 
@@ -41,7 +41,7 @@ function pointInPolygon(p, poly) {
 }
 
 // signed distance function
-function sdf(p, poly) {
+export function sdf(p, poly) {
 	if (pointInPolygon(p, poly)) {
 		console.warn('Kart within Parliament');
 		return -udf(p, poly);
@@ -50,7 +50,7 @@ function sdf(p, poly) {
 }
 
 const epsilon = 0.01;
-function normal(p, poly) {
+export function normal(p, poly) {
 	const x = sdf({ x: p.x + epsilon, y: p.y }, poly)
 			- sdf({ x: p.x - epsilon, y: p.y }, poly),
 		y = sdf({ x: p.x, y: p.y + epsilon }, poly)
@@ -71,7 +71,7 @@ function udf(p, poly) {
 	return d;
 }
 
-function* lines(poly) {
+export function* lines(poly) {
 	for (let i = 0; i < poly.length; ++i)
 		yield [ poly[i], poly[(i + 1) % poly.length] ];
 }
