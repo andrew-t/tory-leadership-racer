@@ -8,8 +8,11 @@ export const renderer = new THREE.WebGLRenderer();
 const maxDelta = 0.1;
 
 const frameCallbacks = [];
-export function onFrame(callback) {
+export function beforeFrame(callback) {
 	frameCallbacks.unshift(callback);
+}
+export function onFrame(callback) {
+	frameCallbacks.push(callback);
 }
 
 document.addEventListener('DOMContentLoaded', () => {

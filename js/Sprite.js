@@ -16,24 +16,29 @@ export class Sprite {
 		this.map.repeat.set(1 / sheetSize, 1 / sheetSize);
 		this.mirror = false;
 		this.size = 1;
+		this.position = new THREE.Vector3(0, 0, 0);
+		onFrame((scene, camera) => {
+			dir.copy(getCameraDirection(camera)).multiplyScalar(this.size * 0.5);
+			dir.setY(dir.y * 0.25);
+			this.sprite.position.subVectors(this.position, dir);
+		});
 	}
 
 	setSize(size) {
-		this.sprite.scale.set(size, size, 1);
+		this.size = size;
+		this.sprite.scale.set(size * 1.25, size * 1.25, 1);
 	}
 
 	setSprite(n, flip) {
 		this.setSprite2(
 			n % this.sheetSize,
-			this.flipSpriteId(n / this.sheetSize),
+			this.sheetSize +~(n / this.sheetSize),
 			flip);
 	}
 
-	flipSpriteId(n) { return this.sheetSize +~ n; }
-
 	setSprite2(x, y, flip) {
 		this.map.offset.set(
-			(flip ? this.flipSpriteId(x) : ~~x) / this.sheetSize,
+			(flip ? -~x : ~~x) / this.sheetSize,
 			~~y / this.sheetSize);
 		this.map.repeat.set((flip ? -1 : 1) / this.sheetSize, 1 / this.sheetSize);
 	}
@@ -41,9 +46,6 @@ export class Sprite {
 	addToScene(scene) {
 		scene.add(this.sprite);
 	}
-
-	get position() { return this.sprite.position; }
-	set position(p) { return this.sprite.position = p; }
 }
 
 export class DirectionalSprite extends Sprite {
@@ -56,15 +58,22 @@ export class DirectionalSprite extends Sprite {
 		super(filename, sheetSize);
 		this.angle = 0;
 		const lastSprite = spriteCount - 1;
+		this.steering = 0; // 0 = no steer, +ve = left, -ve = right
+		this.steerSpriteEffect = 25;
 		onFrame((scene, camera) => {
-			const cameraDirection = dir.set(0, 0, -1)
-					.applyMatrix4(camera.matrixWorld)
-					.sub(camera.position),
+			const cameraDirection = getCameraDirection(camera),
 				cameraAngle = Math.atan2(cameraDirection.z, cameraDirection.x),
-				fract = ((this.angle - cameraAngle) / Math.PI + 4) % 2,
+				fract = ((this.angle + this.steering * this.steerSpriteEffect - cameraAngle) / Math.PI + 4) % 2,
 				mirror = (fract > 1),
 				n = Math.round(Math.abs(1 - fract) * lastSprite);
+			// if (this.isPlayer) console.log(n, mirror, fract)
 			this.setSprite(n, mirror);
 		});
 	}
+}
+
+function getCameraDirection(camera) {
+	return dir.set(0, 0, -1)
+		.applyMatrix4(camera.matrixWorld)
+		.sub(camera.position)
 }

@@ -11,7 +11,7 @@ const coastFriction = 0.8,
 
 export default class Kart extends DirectionalSprite {
 	constructor() {
-		super('res/test-sprite.png', 2, 4);
+		super('res/kart.png', 3, 9);
 		this.setSize(2);
 		this.position.y = 1;
 		this.speed = { x: 0, y: 0 };
@@ -23,7 +23,8 @@ export default class Kart extends DirectionalSprite {
 
 		this.drive = 0; // 0 = no acceleration, +ve = forwards, -ve = backwards
 		this.brake = 1; // 1 = no brake, 0 = immediate stop
-		this.steering = 0; // 0 = no steer, +ve = left, -ve = right
+		// also this.steering
+
 		onFrame((scene, camera, delta) => {
 			// acceleration
 			this.forward = {
@@ -96,8 +97,8 @@ export default class Kart extends DirectionalSprite {
 		this.speed = addVec(
 			vecByScal(abnormal, glance * 0.8),
 			vecByScal(normal, headOn * -0.4));
-		this.position.x += normal.x * (0.01 - d * 1.05);
-		this.position.z += normal.y * (0.01 - d * 1.05);
+		this.position.x -= normal.x * (0.0 + d * 1.05);
+		this.position.z -= normal.y * (0.0 + d * 1.05);
 	}
 
 	driveVector() {

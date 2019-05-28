@@ -43,7 +43,7 @@ function pointInPolygon(p, poly) {
 // signed distance function
 export function sdf(p, poly) {
 	if (pointInPolygon(p, poly)) {
-		console.warn('Kart within Parliament');
+//		console.warn('Kart within Parliament');
 		return -udf(p, poly);
 	}
 	return udf(p, poly);

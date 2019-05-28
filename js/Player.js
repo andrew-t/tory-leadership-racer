@@ -1,4 +1,4 @@
-import { scene, onFrame } from './init.js';
+import { scene, onFrame, beforeFrame } from './init.js';
 import Kart from './Kart.js';
 import pad from './gamepad.js';
 import { parliamentDistance } from './track.js';
@@ -8,7 +8,8 @@ const acceleration = 0.6,
 	reverseAcceleration = -0.3,
 	brakePower = 0.1,
 	steer = 0.008,
-	tau = Math.PI * 2;
+	tau = Math.PI * 2,
+	yAxis = new THREE.Vector3(0, 1, 0);
 
 class Button {
 	constructor(player) {
@@ -36,7 +37,7 @@ export default class Player extends Kart {
 		this.fireButton = new Button(this);
 		this.yButton = new Button(this);
 
-		onFrame((scene, camera, delta) => {
+		beforeFrame((scene, camera, delta) => {
 			this.moving = this.coast > 0.01;
 			this.reversing = this.coast < -0.01;
 			this.accelerateButton.update(pad.accelerate);
@@ -76,7 +77,9 @@ export default class Player extends Kart {
 			// looking at a point 1m above them
 			camera.position.subVectors(
 				this.position,
-				this.driveVector().multiplyScalar(8));
+				this.driveVector()
+					.applyAxisAngle(yAxis, Math.abs(pad.camStick.x) > 0.05 ? pad.camStick.x * 3 : 0)
+					.multiplyScalar(8));
 			camera.position.y = 2.5;
 			camera.lookAt(this.position);
 			camera.position.y += 1;
