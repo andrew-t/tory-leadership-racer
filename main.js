@@ -31,7 +31,7 @@ karts.forEach(k => {
 					newspaper(laps == 7
 							? `${karts.find(k => k.active).character.name} BECOMES PRIME MINISTER`
 							: `${k.character.name} ELIMINATED IN ROUND ${laps}`,
-					!	player.active);
+						(laps == 7) || !player.active);
 				}
 	});
 });
