@@ -32,17 +32,16 @@ ghost.setSize(3);
 ghost.addToScene(scene);
 
 onFrame(() => {
-	// if (leaning < 70) ghost.position.set(0, 0, 0);
-	// else {
-		const now = Date.now() * 0.0002,
-			m = (leaning + 300) / 400;
-		if (player.forward)
-			ghost.position.set(
-				player.position.x * m + player.forward.x * 2 + Math.sin(now) * 0.5,
-				Math.sin(now * 0.61) * 0.5 + 1.5,
-				player.position.z * m + player.forward.y * 2 + Math.sin(now * 1.61) * 0.5);
-	// }
+	const now = Date.now() * 0.0002,
+		m = (leaning + 300) / 400;
+	if (player.forward)
+		ghost.position.set(
+			player.position.x * m + player.forward.x * 2 + Math.sin(now) * 0.5,
+			Math.sin(now * 0.61) * 0.5 + 1.5,
+			player.position.z * m + player.forward.y * 2 + Math.sin(now * 1.61) * 0.5);
 	rightMeter.style.opacity = (leaning > 95)
 		? Math.sin(Date.now() * 0.01) * 0.5 + 0.5
 		: 1;
+	if (leaning > 99)
+		player.drive *= 0.3;
 });
