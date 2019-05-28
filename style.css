@@ -51,4 +51,7 @@ body {
 	color: white;
 	font-family: sans-serif;
 	font-weight: bold;
+	font-size: 2vmin;
+	text-shadow: 0 0.1vmin 0.5vmin black;
 }
+#placings li.player { color: #8af; }

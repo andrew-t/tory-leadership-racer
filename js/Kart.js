@@ -4,14 +4,23 @@ import {
 	parliamentDistance, parliamentNormal,
 	simpleParliamentDistance, simpleParliamentNormal
 } from './track.js';
+import contenders from './contenders.js';
 
 const coastFriction = 0.8,
 	driftFriction = 0.12,
 	tau = Math.PI * 2;
 
+let nextCharacter = 0;
+
+function currentCharacter() {
+	return contenders[nextCharacter % contenders.length];
+}
+
 export default class Kart extends DirectionalSprite {
 	constructor() {
-		super('res/kart.png', 3, 9);
+		super(`res/${currentCharacter().filename}.png`, 3, 9);
+		this.character = currentCharacter();
+		++nextCharacter;
 		this.setSize(2);
 		this.position.y = 1;
 		this.speed = { x: 0, y: 0 };

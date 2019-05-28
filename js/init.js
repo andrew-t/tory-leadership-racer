@@ -39,12 +39,20 @@ document.addEventListener('DOMContentLoaded', () => {
 	floorTexture.repeat.set(600, 600);
 	const floor = new THREE.Mesh(
 		new THREE.PlaneGeometry(10000, 10000),
-		new THREE.MeshLambertMaterial({ map: floorTexture }));
+		new THREE.MeshBasicMaterial({ map: floorTexture }));
 	// nudge down slightly so we can draw a track on top easily:
 	floor.position.y = -0.0001;
 	floor.rotation.x = Math.PI / 2;
 	floor.material.side = THREE.DoubleSide;
 	scene.add(floor);
+
+	const panoramaTexture = textureLoader.load('../res/panorama.jpg'),
+		background = new THREE.Mesh(
+			new THREE.CylinderGeometry(300, 300, 160, 30),
+			new THREE.MeshBasicMaterial({ map: panoramaTexture }));
+	background.position.y = 78;
+	background.material.side = THREE.DoubleSide;
+	scene.add(background);
 
 	renderer.setPixelRatio(window.devicePixelRatio);
 	renderer.setSize(window.innerWidth, window.innerHeight);

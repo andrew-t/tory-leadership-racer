@@ -12,7 +12,7 @@ export default class Enemy extends Kart {
 	constructor() {
 		super();
 		this.preferredDistance = Math.random() * 15 + 5;
-		this.lookAheadDistance = Math.random() * 20 + 10;
+		this.lookAheadDistance = Math.random() * 15 + 5;
 		this.preferredSpeedSquared = Math.random() * 2.5 + 1;
 		this.preferredCorneringSpeedSquared = Math.random() * 1.5 + 0.8;
 		this.steeriness = Math.random() * 0.6 + 0.2;
@@ -49,6 +49,11 @@ export default class Enemy extends Kart {
 					this.drive = 0;
 					this.brake = brakePower;
 				}
+			}
+			// hack to stop them getting caught on corners
+			if (distance < 2) {
+				this.position.x += left.x;
+				this.position.z += left.y;
 			}
 			// console.log({
 			// 	// distance, desiredDistance: this.preferredDistance,
