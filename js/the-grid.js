@@ -15,7 +15,7 @@ for (let i = 0; i < 8; ++i) {
 	kart.addToScene(scene);
 	karts.push(kart);
 	onFrame(() => {
-		for (let i = 0; i < 7; ++i) {
+		for (let i = 0; i < 8; ++i) {
 			const a = karts[i];
 			for (let j = i + 1; j < 8; ++j) {
 				const b = karts[j];
@@ -29,6 +29,15 @@ for (let i = 0; i < 8; ++i) {
 					a.collide(d, { x: dx * -0.5, y: dy * -0.5 });
 					b.collide(d, { x: dx * 0.5, y: dy * 0.5 });
 				}
+			}
+			// oh, and you can hit theresa may
+			const dx = a.position.x - 92,
+				dy = a.position.z + 5,
+				ds = dx * dx + dy * dy;
+			if (ds < 4) {
+				console.log('Kart hit Theresa May!');
+				const d = Math.sqrt(ds) * 0.5;
+				a.collide(d, { x: dx * -0.5, y: dy * -0.5 });
 			}
 		}
 	});

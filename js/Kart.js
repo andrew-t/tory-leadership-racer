@@ -25,6 +25,8 @@ export default class Kart extends DirectionalSprite {
 		this.position.y = 1;
 		this.speed = { x: 0, y: 0 };
 
+		this.active = false;
+
 		this.lapListeners = [];
 		this.unlaps = 1; // cross the start line once to start lap 1
 		this.laps = 0;
@@ -41,8 +43,10 @@ export default class Kart extends DirectionalSprite {
 				y: Math.sin(this.angle)
 			};
 			this.left = { x: -this.forward.y, y: this.forward.x };
-			this.speed.x += this.drive * this.forward.x * delta;
-			this.speed.y += this.drive * this.forward.y * delta;
+			if (this.active) {
+				this.speed.x += this.drive * this.forward.x * delta;
+				this.speed.y += this.drive * this.forward.y * delta;
+			}
 			// braking and friction
 			this.coast = dot(this.speed, this.forward);
 			this.drift = dot(this.speed, this.left);
@@ -57,7 +61,7 @@ export default class Kart extends DirectionalSprite {
 				vecByScal(this.left,
 					this.drift * Math.pow(driftFriction, delta)));
 			// steering - kind of a turning circle but you can also spin slightly on the spot
-			this.angle += this.steering * (1 + this.coast);
+			if (this.active) this.angle += this.steering * (1 + this.coast);
 			// and finally movement
 			this.position.x += this.speed.x;
 			this.position.z += this.speed.y;

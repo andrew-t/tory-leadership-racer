@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Patrick+Hand|Schoolbell&display=swap');
+
 body {
 	padding: 0;
 	margin: 0;
@@ -23,8 +25,15 @@ body {
 }
 #leaning .title {
 	position: absolute;
-	top: -5vh;
+	top: -4vh;
 	color: yellow;
+	font-family: 'Patrick Hand';
+	text-align: center;
+	width: 80vw;
+	display: block;
+	font-size: 3vh;
+	text-transform: uppercase;
+	text-shadow: 0 0.1vmin 0.5vmin black;
 }
 #left-wing, #right-wing {
 	width: 40vw;
@@ -46,12 +55,47 @@ body {
 
 #placings {
 	position: absolute;
+	font-family: 'Patrick Hand';
 	top: 15vh;
 	left: 5vw;
 	color: white;
-	font-family: sans-serif;
+	text-transform: uppercase;
 	font-weight: bold;
 	font-size: 2vmin;
 	text-shadow: 0 0.1vmin 0.5vmin black;
 }
 #placings li.player { color: #8af; }
+#placings li.out { color: #000; }
+
+#news {
+	position: absolute;
+	width: 80vw;
+	height: 50vw;
+	background-image: url('res/news.png');
+	background-size: contain;
+	background-position: 50% 0;
+	background-repeat: no-repeat;
+	transition: transform 300ms;
+	left: 10vw;
+	top: calc(50vh - 25vw);
+}
+#headline {
+	text-transform: uppercase;
+	font-family: Schoolbell;
+	font-size: 5vw;
+	transform: rotate(-7deg);
+	display: block;
+	text-align: center;
+	position: absolute;
+	width: 65vw;
+	left: 10vw;
+	top: 10vw;
+}
+#news.on {
+	transform: none;
+	transition-timing-function: ease-in;
+}
+#news.off {
+	transform: translate(0, 120vh) rotate(30deg);
+	transition-timing-function: ease-out;
+}

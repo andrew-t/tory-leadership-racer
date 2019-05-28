@@ -1,6 +1,7 @@
 import { Sprite } from './Sprite.js';
 import { player } from './the-grid.js';
 import { onFrame, scene } from './init.js';
+import newspaper from './newspaper.js';
 
 const leftMeter = document.getElementById('left-wing'),
 	rightMeter = document.getElementById('right-wing');
@@ -11,6 +12,7 @@ const maxNudge = 3,
 	mult = 2;
 
 export default function nudge(d) {
+	if (!player.active) return;
 	d *= mult;
 	if (d > maxNudge) d = maxNudge;
 	if (d < -maxNudge) d = -maxNudge;
@@ -44,4 +46,8 @@ onFrame(() => {
 		: 1;
 	if (leaning > 99)
 		player.drive *= 0.3;
+	if (leaning < -99) {
+		player.active = false;
+		newspaper(`${player.character.name} DRIFTS TOO FAR LEFT AND JOINS CHANGE UK`, true);
+	}
 });
