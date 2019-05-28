@@ -2,7 +2,7 @@ import { onFrame } from './init.js';
 import { simpleParliamentDistance, simpleParliamentNormal } from './track.js';
 import Kart from './Kart.js';
 
-const acceleration = 1.4, // faster than player kart
+const acceleration = 1.2, // faster than player kart
 	reverseAcceleration = -0.5,
 	brakePower = 0.02, // stop faster than player kart
 	steer = 0.03, // handle better than player kart

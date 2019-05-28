@@ -8,8 +8,8 @@ const leftMeter = document.getElementById('left-wing'),
 
 let leaning = 0;
 
-const maxNudge = 3,
-	mult = 2;
+const maxNudge = 2,
+	mult = 1.5;
 
 export default function nudge(d) {
 	if (!player.active) return;

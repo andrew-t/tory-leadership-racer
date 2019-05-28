@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Patrick+Hand|Schoolbell&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Patrick+Hand&display=swap');
 
 body {
 	padding: 0;
@@ -81,8 +81,8 @@ body {
 }
 #headline {
 	text-transform: uppercase;
-	font-family: Schoolbell;
-	font-size: 5vw;
+	font-family: 'Patrick Hand';
+	font-size: 6vw;
 	transform: rotate(-7deg);
 	display: block;
 	text-align: center;
@@ -90,6 +90,7 @@ body {
 	width: 65vw;
 	left: 10vw;
 	top: 10vw;
+	line-height: 1.1;
 }
 #news.on {
 	transform: none;

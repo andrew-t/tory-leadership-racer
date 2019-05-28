@@ -34,4 +34,5 @@ setTimeout(() => {
 	karts.forEach(k => k.active = true);
 	clearInterval(i);
 	hanky.position.set(90.5, 0.25, -5.05);
+	music.play();
 }, 8000);

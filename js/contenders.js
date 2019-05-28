@@ -4,7 +4,7 @@ export default [
 	{ name: 'Savij Jardin', filename: 'sajid' },
 	{ name: 'Hulture Vulture', filename: 'generic' },
 	{ name: 'Raabid Dom', filename: 'generic' },
-	{ name: 'Boring Stewart', filename: 'generic' },
+	{ name: 'Rod Stewart', filename: 'generic' },
 	{ name: 'Dr Fox', filename: 'generic' },
-	{ name: 'Matt And Cock', filename: 'generic' }
+	{ name: 'Mad Hancock', filename: 'generic' }
 ].sort((a, b) => Math.random() - 0.5);
