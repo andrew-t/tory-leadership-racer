@@ -86,7 +86,7 @@ export default class Player extends Kart {
 
 			const d = parliamentDistance({ x: this.position.x, y: this.position.z });
 			// console.log('Current distance:', d);
-			adjustLeaning((20 - d) * delta);
+			adjustLeaning((23 - d) * delta);
 		});
 
 	}

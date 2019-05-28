@@ -55,17 +55,6 @@ export default class Enemy extends Kart {
 				this.position.x += left.x;
 				this.position.z += left.y;
 			}
-			// console.log({
-			// 	// distance, desiredDistance: this.preferredDistance,
-			// 	// angle: this.angle, desiredAngle,
-			// 	dDistance, dTheta,
-			// 	steering: this.steering,
-			// 	drive: this.drive,
-			// 	brake: this.brake
-			// })
-		});
-		this.onLap(laps => {
-			console.log(`That's ${laps} laps for this kart.`, this);
 		});
 	}
 }

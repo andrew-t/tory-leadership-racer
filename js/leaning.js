@@ -1,3 +1,7 @@
+import { Sprite } from './Sprite.js';
+import { player } from './the-grid.js';
+import { onFrame, scene } from './init.js';
+
 const leftMeter = document.getElementById('left-wing'),
 	rightMeter = document.getElementById('right-wing');
 
@@ -21,3 +25,24 @@ export default function nudge(d) {
 		rightMeter.style.transform = `scale(0, 1)`;
 	}
 }
+
+const ghost = new Sprite('res/jacob.png', 1),
+	gPos = new THREE.Vector3();
+ghost.setSize(3);
+ghost.addToScene(scene);
+
+onFrame(() => {
+	// if (leaning < 70) ghost.position.set(0, 0, 0);
+	// else {
+		const now = Date.now() * 0.0002,
+			m = (leaning + 300) / 400;
+		if (player.forward)
+			ghost.position.set(
+				player.position.x * m + player.forward.x * 2 + Math.sin(now) * 0.5,
+				Math.sin(now * 0.61) * 0.5 + 1.5,
+				player.position.z * m + player.forward.y * 2 + Math.sin(now * 1.61) * 0.5);
+	// }
+	rightMeter.style.opacity = (leaning > 95)
+		? Math.sin(Date.now() * 0.01) * 0.5 + 0.5
+		: 1;
+});
