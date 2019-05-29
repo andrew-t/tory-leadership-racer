@@ -29,6 +29,7 @@ const music = new Audio('res/music.mp3');
 
 function start() {
 	console.log('Starting');
+	document.body.classList.remove('splash');
 	let i, start;
 	newspaper('THERESA MAY TO GIVE SPEECH OUTSIDE PARLIAMENT');
 	setTimeout(() => may.setSprite(2), 2500);

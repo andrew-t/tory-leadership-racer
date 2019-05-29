@@ -101,7 +101,7 @@ body {
 	transition-timing-function: ease-out;
 }
 
-#touch-controls {
+#splash, #touch-controls {
 	display: none;
 	position: absolute;
 	left: 0;
@@ -165,3 +165,21 @@ body {
 	background: blue;
 }
 #touch-controls #right:before { content: 'RIGHT'; }
+
+#splash {
+	background: rgba(0, 0, 0, 0.5);
+	padding: 5vmin;
+	font-size: 4vmin;
+	color: white;
+	text-align: center;
+	font-family: 'Patrick Hand';
+	line-height: 1;
+	box-sizing: border-box;
+	overflow: auto;
+}
+.splash #touch-controls { display: none; }
+.splash #splash { display: block; }
+
+a { color: yellow; }
+a:visited { color: yellow; }
+a:hover { color: red; }
