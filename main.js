@@ -1,15 +1,10 @@
 import { scene, onFrame } from './js/init.js';
 import { karts, player } from './js/the-grid.js';
-// import { drawPolygon, dilate } from './js/draw.js';
 import { parliamentPolygon, simpleParliament } from './js/track.js';
 import newspaper from './js/newspaper.js';
-import './js/may.js';
+import './js/char-select.js';
 
-// console.log(simpleParliament);
-// console.log(dilate(simpleParliament, 4));
-// drawPolygon(scene, dilate(simpleParliament, 40));
-// drawPolygon(scene, dilate(parliamentPolygon, 20));
-// drawPolygon(scene, dilate(parliamentPolygon, 0.5));
+newspaper('THERESA MAY RESIGNS, IDIOT MAKES GAME');
 
 console.log('Stats for the racers:');
 karts.forEach(k => {

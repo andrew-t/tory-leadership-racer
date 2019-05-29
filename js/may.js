@@ -2,18 +2,6 @@ import { Sprite } from './Sprite.js';
 import newspaper from './newspaper.js';
 import { karts } from './the-grid.js';
 import { scene } from './init.js';
-import gamepad from './gamepad.js'
-
-newspaper('THERESA MAY RESIGNS, IDIOT MAKES GAME');
-
-function hold() {
-	if (gamepad.start) start();
-	else {
-		// if (gamepad.raw) console.log(gamepad.raw.buttons.map(i => i.pressed));
-		requestAnimationFrame(hold);
-	}
-}
-hold();
 
 const may = new Sprite('res/may.png', 2);
 may.setSize(4);
@@ -27,9 +15,9 @@ hanky.addToScene(scene);
 
 const music = new Audio('res/music.mp3');
 
-function start() {
+export default function start() {
 	console.log('Starting');
-	document.body.classList.remove('splash');
+	document.body.classList.remove('char-select');
 	let i, start;
 	newspaper('THERESA MAY TO GIVE SPEECH OUTSIDE PARLIAMENT');
 	setTimeout(() => may.setSprite(2), 2500);

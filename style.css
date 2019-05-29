@@ -4,6 +4,7 @@ body {
 	padding: 0;
 	margin: 0;
 	overflow: hidden;
+	user-select: none;
 }
 
 #scene {
@@ -101,7 +102,7 @@ body {
 	transition-timing-function: ease-out;
 }
 
-#splash, #touch-controls {
+#splash, #touch-controls, #char-select {
 	display: none;
 	position: absolute;
 	left: 0;
@@ -183,3 +184,62 @@ body {
 a { color: yellow; }
 a:visited { color: yellow; }
 a:hover { color: red; }
+
+.char-select #touch-controls { display: none; }
+.char-select #char-select { display: block; }
+#char-select > * {
+	position: absolute;
+	display: block;
+	text-align: center;
+	color: yellow;
+	font-family: 'Patrick Hand';
+	line-height: 1;
+}
+#character-name, #select-a-character {
+	width: 100vw;
+	background: #000a;
+	padding: 1vmin;
+	box-sizing: border-box;
+}
+#select-a-character {
+	top: 15vmin;
+	font-size: 7vmin;
+	text-transform: uppercase;
+}
+#character-name {
+	top: 25vmin;
+	font-size: 10vmin;
+}
+#prev-char, #next-char {
+	background: blue;
+	font-size: 12vmin;
+	width: 30vmin;
+	height: 30vmin;
+	top: 50vmin;
+	box-shadow: 0 5vmin 5vmin black;
+	border-radius: 15vmin;
+	box-sizing: border-box;
+	padding: 9vmin 0;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+#prev-char {
+	left: 10vmin;
+}
+#next-char {
+	right: 10vmin;
+}
+#ok-char {
+	color: white;
+	font-size: 12vmin;
+	border: 0.5vmin solid white;
+	width: 30vmin;
+	height: 30vmin;
+	top: 50vmin;
+	left: calc(50vw - 15vmin);
+	border-radius: 15vmin;
+	box-sizing: border-box;
+	padding: 9vmin 0;
+	text-transform: uppercase;
+	cursor: pointer;
+}

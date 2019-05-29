@@ -6,12 +6,7 @@ const textureLoader = new THREE.TextureLoader(),
 
 export class Sprite {
 	constructor(filename, sheetSize = 1) {
-		this.map = textureLoader.load(filename);
-		this.map.wrapS = THREE.RepeatWrapping;
-		this.map.wrapT = THREE.RepeatWrapping;
-		this.material = new THREE.SpriteMaterial(
-			{ map: this.map, color: 0xffffff, fog: false });
-		this.sprite = new THREE.Sprite(this.material);
+		this.updateFilename(filename);
 		this.sheetSize = sheetSize;
 		this.map.repeat.set(1 / sheetSize, 1 / sheetSize);
 		this.mirror = false;
@@ -44,7 +39,18 @@ export class Sprite {
 	}
 
 	addToScene(scene) {
+		this.scene = scene;
 		scene.add(this.sprite);
+	}
+
+	updateFilename(filename) {
+		this.map = textureLoader.load(filename);
+		this.map.wrapS = THREE.RepeatWrapping;
+		this.map.wrapT = THREE.RepeatWrapping;
+		this.material = new THREE.SpriteMaterial(
+			{ map: this.map, color: 0xffffff, fog: false });
+		if (!this.sprite) this.sprite = new THREE.Sprite(this.material);
+		else this.sprite.material = this.material;
 	}
 }
 

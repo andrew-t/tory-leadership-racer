@@ -11,6 +11,7 @@ const gamepad = {
 const heldKeys = new Set();
 window.addEventListener('keydown', e => heldKeys.add(e.key.toUpperCase()));
 window.addEventListener('keyup', e => heldKeys.delete(e.key.toUpperCase()));
+window.addEventListener('keypress', e => e.preventDefault());
 
 const touches = new Map(),
 	touchControls = {
