@@ -45,6 +45,9 @@ onFrame(() => {
 	rightMeter.style.opacity = (leaning > 95)
 		? Math.sin(Date.now() * 0.01) * 0.5 + 0.5
 		: 1;
+	leftMeter.style.opacity = (leaning < -95)
+		? Math.sin(Date.now() * 0.01) * 0.5 + 0.5
+		: 1;
 	if (leaning > 99)
 		player.drive *= 0.3;
 	if (leaning < -99) {
