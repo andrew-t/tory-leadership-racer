@@ -9,7 +9,7 @@ const leftMeter = document.getElementById('left-wing'),
 let leaning = 0;
 
 const maxNudge = 2,
-	mult = 1.5;
+	mult = 2;
 
 export default function nudge(d) {
 	if (!player.active) return;
@@ -34,6 +34,7 @@ ghost.setSize(3);
 ghost.addToScene(scene);
 
 onFrame(() => {
+	if (!player.active) return;
 	const now = Date.now() * 0.0002,
 		m = (leaning + 300) / 400;
 	if (player.forward)

@@ -40,17 +40,18 @@ export default class Player extends Kart {
 		beforeFrame((scene, camera, delta) => {
 			this.moving = this.coast > 0.01;
 			this.reversing = this.coast < -0.01;
+			if (!this.moving) this.collidedSinceHalt = false;
 			this.accelerateButton.update(pad.accelerate);
 			this.brakeButton.update(pad.brake);
 			this.fireButton.update(pad.fire);
 			this.yButton.update(pad.y);
 
-			if (this.reversing) {
-				this.drive = this.brakeButton.pressed ? reverseAcceleration : 0;
-				this.brake = this.accelerateButton.pressed ? brakePower : acceleration;
-			} else if (this.moving) {
+			if (!this.collidedSinceHalt || this.moving) {
 				this.brake = this.brakeButton.pressed ? brakePower : 1;
 				this.drive = this.accelerateButton.pressed ? acceleration : 0;
+			} else if (this.reversing) {
+				this.drive = this.brakeButton.pressed ? reverseAcceleration : 0;
+				this.brake = this.accelerateButton.pressed ? brakePower : acceleration;
 			} else {
 				if (this.accelerateButton.pressed
 					&& !this.accelerateButton.movingWhenPressed
