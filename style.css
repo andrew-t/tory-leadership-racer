@@ -100,3 +100,68 @@ body {
 	transform: translate(0, 120vh) rotate(30deg);
 	transition-timing-function: ease-out;
 }
+
+#touch-controls {
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+}
+@media (hover: none) { #touch-controls { display: block; } }
+
+#touch-controls div {
+	font-family: 'Patrick Hand';
+	width: 20vmin;
+	height: 20vmin;
+	position: absolute;
+	box-shadow: 0 2vmin 2vmin black;
+	color: white;
+	font-size: 8vmin;
+	text-align: center;
+	box-sizing: border-box;
+	padding-top: 6vmin;
+	line-height: 1;
+	border-radius: 10vmin;
+	opacity: 0.5;
+}
+#touch-controls div.active { opacity: 1; }
+
+#touch-controls #gas {
+	right: 10vmin;
+	bottom: 20vmin;
+	background: green;
+}
+#touch-controls #gas:before { content: 'GO'; }
+
+#touch-controls #brake {
+	right: 35vmin;
+	bottom: 10vmin;
+	background: red;
+}
+#touch-controls #brake:before { content: 'STOP'; }
+
+@media (max-aspect-ratio: 5/4) {
+	#touch-controls #brake {
+		right: 10vmin;
+	}
+	#touch-controls #gas {
+		right: 10vmin;
+		bottom: 35vmin;
+	}
+}
+
+#touch-controls #left {
+	left: 10vmin;
+	bottom: 15vmin;
+	background: blue;
+}
+#touch-controls #left:before { content: 'LEFT'; }
+
+#touch-controls #right {
+	left: 35vmin;
+	bottom: 15vmin;
+	background: blue;
+}
+#touch-controls #right:before { content: 'RIGHT'; }
