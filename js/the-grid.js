@@ -11,7 +11,7 @@ export function resetKarts() {
 	for (let i = 0; i < karts.length; ++i) {
 		const kart = karts[i];
 		kart.position.x = 85 - (i & 1) * 5;
-		kart.position.z = -5 - i * 5;
+		kart.position.z = -3 - i * 3;
 		kart.angle = Math.PI * 0.5;
 		kart.speed = { x: 0, y: 0 };
 		kart.active = false;

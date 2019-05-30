@@ -6,7 +6,7 @@ import './js/char-select.js';
 import startRace, { gameOver } from './js/may.js';
 import { reset as resetLeaning } from './js/leaning.js';
 
-newspaper('Tory leadership contest: Iain Duncan Smith warns of ‘chaos’');
+newspaper('Tory leadership contest: Iain Duncan Smith warns of ‘chaos’', 5000);
 
 let winScreen, loseScreen;
 
