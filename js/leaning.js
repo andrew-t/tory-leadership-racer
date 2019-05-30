@@ -1,5 +1,5 @@
 import { Sprite } from './Sprite.js';
-import { player } from './the-grid.js';
+import { player, karts } from './the-grid.js';
 import { onFrame, scene } from './init.js';
 import newspaper from './newspaper.js';
 import { gameOver } from './may.js';
@@ -40,7 +40,6 @@ ghost.setSize(3);
 ghost.addToScene(scene);
 
 onFrame(() => {
-	if (!player.active) return;
 	const now = Date.now() * 0.0002,
 		m = (leaning + 300) / 400;
 	if (player.forward)
@@ -54,12 +53,13 @@ onFrame(() => {
 	leftMeter.style.opacity = (leaning < -95)
 		? Math.sin(Date.now() * 0.01) * 0.5 + 0.5
 		: 1;
+	if (!player.active || karts.every(k => !k.active == !k.isPlayer)) return;
 	if (leaning > 99)
 		player.drive *= 0.3;
 	if (leaning < -99) {
 		player.active = false;
 		gameOver();
-		newspaper(`${player.character.name} DRIFTS TOO FAR LEFT AND JOINS CHANGE UK`);
+		newspaper(`${player.character.name} DRIFTS TOO FAR LEFT AND JOINS CHANGE UK`, 5000);
 		document.getElementById('lose-screen').classList.remove('hidden');
 	}
 });

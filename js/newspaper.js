@@ -3,7 +3,7 @@ let cancelTimer = null;
 const newspaper = document.getElementById('news'),
 	headline = document.getElementById('headline');
 
-export default function publishNews(newHeadline) {
+export default function publishNews(newHeadline, timeout) {
 	console.log('THE LATEST NEWS:', newHeadline);
 	if (cancelTimer) clearTimeout(cancelTimer);
 	headline.innerHTML = newHeadline;
@@ -13,5 +13,5 @@ export default function publishNews(newHeadline) {
 		newspaper.classList.add('off');
 		newspaper.classList.remove('on');
 		cancelTimer = null;
-	}, 1500);
+	}, timeout || 1500);
 }

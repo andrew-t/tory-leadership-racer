@@ -271,3 +271,8 @@ a.big-button:hover {
 a.big-button:focus {
 	box-shadow: 0 0 0 0.2vmin yellow;
 }
+
+h1 img {
+	max-width: 80vw;
+	max-height: 60vh;
+};

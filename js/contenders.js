@@ -6,7 +6,6 @@ export default [
 	{ name: 'Boxing Cleverly', filename: 'james' },
 	{ name: 'Racer McFace', filename: 'esther' },
 	{ name: 'Kit Madhouse', filename: 'generic' },
-	{ name: 'Kit Madhouse', filename: 'generic' },
 	{ name: 'Hulture Vulture', filename: 'generic' },
 	{ name: 'Raabid Dom', filename: 'generic' },
 	{ name: 'Hot Rod Stewart', filename: 'generic' },

@@ -27,9 +27,11 @@ karts.forEach(k => {
 			for (const k of karts)
 				if (k.active && k.laps < laps) {
 					k.active = false;
-					newspaper(laps == 7
+					const lastLap = (laps == karts.length - 1);
+					newspaper(lastLap
 							? `${karts.find(k => k.active).character.name} BECOMES PRIME MINISTER`
-							: `${k.character.name} ELIMINATED IN ROUND ${laps}`);
+							: `${k.character.name} ELIMINATED IN ROUND ${laps}`,
+						lastLap ? 5000 : null);
 					if (!player.active) {
 						loseScreen.classList.remove('hidden');
 						gameOver();

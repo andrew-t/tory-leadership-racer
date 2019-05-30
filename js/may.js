@@ -29,12 +29,12 @@ export default function start() {
 	setTimeout(() => may.setSprite(1), 3500);
 	setTimeout(() => {
 		may.setSprite(3);
-		hanky.position.set(90.5, 4, -5.05);
+		hanky.position.set(88.5, 4, -5.05);
 		start = Date.now();
 		i = setInterval(() => {
 			const t = (Date.now() - start) / 2000,
 				theta = t * Math.PI * 2;
-			hanky.position.set(90.5 + Math.sin(theta),
+			hanky.position.set(88.5 + Math.sin(theta),
 				4 - 1.5 * t - (1 - Math.abs(Math.sin(theta))) * 0.5,
 				-5.05);
 			hanky.setSprite(0, (t * 8) % 1 > 0.5);
@@ -44,7 +44,7 @@ export default function start() {
 	setTimeout(() => {
 		karts.forEach(k => k.active = true);
 		clearInterval(i);
-		hanky.position.set(90.5, 0.25, -5.05);
+		hanky.position.set(88.5, 0.25, -5.05);
 		music.play();
 	}, 8000);
 }
