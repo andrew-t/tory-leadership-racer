@@ -36,6 +36,7 @@ for (let i = 0; i < 8; ++i) {
 					ds = dx * dx + dy * dy;
 				if (ds < 4) {
 					console.log('Karts collided');
+					[ a.speed, b.speed ] = [ b.speed, a.speed ];
 					const d = Math.sqrt(ds) * 0.5;
 					a.collide(d, { x: dx * -0.5, y: dy * -0.5 });
 					b.collide(d, { x: dx * 0.5, y: dy * 0.5 });
