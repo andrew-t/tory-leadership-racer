@@ -3,15 +3,20 @@ import gamepad from './gamepad.js'
 import chars from './contenders.js';
 import { karts } from './the-grid.js'
 
+let startReleased = false, done = false, stickReleased, started = false;
+
 function hold() {
 	if (gamepad.start) start();
-	else requestAnimationFrame(hold);
+	else if (started) requestAnimationFrame(hold);
 }
 hold();
 
-let startReleased = false, done = false, stickReleased;
+document.addEventListener('DOMContentLoaded', e => {
+	document.getElementById('start').addEventListener('click', start);
+});
 
 function start() {
+	started = true;
 	document.body.classList.remove('splash');
 	document.body.classList.add('char-select');
 	updateDom();

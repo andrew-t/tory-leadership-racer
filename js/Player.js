@@ -36,17 +36,22 @@ export default class Player extends Kart {
 		this.brakeButton = new Button(this);
 		this.fireButton = new Button(this);
 		this.yButton = new Button(this);
+		this.stillFrames = 0;
 
 		beforeFrame((scene, camera, delta) => {
-			this.moving = this.coast > 0.01;
-			this.reversing = this.coast < -0.01;
-			if (!this.moving) this.collidedSinceHalt = false;
+			if (this.coast > 0.01 || this.coast < -0.01)
+				this.stillFrames = 0;
+			else if (++this.stillFrames > 2) {
+				this.moving = false;
+				this.reversing = false;
+				this.collidedSinceHalt = false;
+			}
 			this.accelerateButton.update(pad.accelerate);
 			this.brakeButton.update(pad.brake);
 			this.fireButton.update(pad.fire);
 			this.yButton.update(pad.y);
 
-			if (!this.collidedSinceHalt || this.moving) {
+			if (this.moving) {
 				this.brake = this.brakeButton.pressed ? brakePower : 1;
 				this.drive = this.accelerateButton.pressed ? acceleration : 0;
 			} else if (this.reversing) {
@@ -55,14 +60,20 @@ export default class Player extends Kart {
 			} else {
 				if (this.accelerateButton.pressed
 					&& !this.accelerateButton.movingWhenPressed
-					&& !this.accelerateButton.reversingWhenPressed)
+					&& !this.accelerateButton.reversingWhenPressed) {
 					this.drive = acceleration;
+					this.moving = true;					
+				}
 				else if (this.brakeButton.pressed
 					&& !this.brakeButton.movingWhenPressed
-					&& !this.brakeButton.reversingWhenPressed)
+					&& !this.brakeButton.reversingWhenPressed) {
 					this.drive = reverseAcceleration;
-				else this.drive = 0;
-				this.brake = 1;
+					this.reversing = true;
+				}
+				else {
+					this.drive = 0;
+					this.brake = 1;
+				}
 			}
 
 			if (pad.y && !this.lastY)
