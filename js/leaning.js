@@ -2,6 +2,7 @@ import { Sprite } from './Sprite.js';
 import { player } from './the-grid.js';
 import { onFrame, scene } from './init.js';
 import newspaper from './newspaper.js';
+import { gameOver } from './may.js';
 
 const leftMeter = document.getElementById('left-wing'),
 	rightMeter = document.getElementById('right-wing');
@@ -57,6 +58,7 @@ onFrame(() => {
 		player.drive *= 0.3;
 	if (leaning < -99) {
 		player.active = false;
+		gameOver();
 		newspaper(`${player.character.name} DRIFTS TOO FAR LEFT AND JOINS CHANGE UK`);
 		document.getElementById('lose-screen').classList.remove('hidden');
 	}

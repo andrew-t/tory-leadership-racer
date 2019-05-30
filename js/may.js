@@ -14,6 +14,11 @@ hanky.setSize(0.5);
 hanky.addToScene(scene);
 
 const music = new Audio('res/music.mp3');
+music.volume = 0.5;
+export function gameOver() {
+	music.pause();
+	music.currentTime = 0;
+}
 
 export default function start() {
 	console.log('Starting');

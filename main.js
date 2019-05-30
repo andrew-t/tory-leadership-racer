@@ -3,7 +3,7 @@ import { karts, player, resetKarts } from './js/the-grid.js';
 import { parliamentPolygon, simpleParliament } from './js/track.js';
 import newspaper from './js/newspaper.js';
 import './js/char-select.js';
-import startRace from './js/may.js';
+import startRace, { gameOver } from './js/may.js';
 import { reset as resetLeaning } from './js/leaning.js';
 
 newspaper('THERESA MAY RESIGNS, IDIOT MAKES GAME');
@@ -30,10 +30,14 @@ karts.forEach(k => {
 					newspaper(laps == 7
 							? `${karts.find(k => k.active).character.name} BECOMES PRIME MINISTER`
 							: `${k.character.name} ELIMINATED IN ROUND ${laps}`);
-					if (!player.active)
+					if (!player.active) {
 						loseScreen.classList.remove('hidden');
-					else if (karts.every(k => !k.isPlayer == !k.active))
+						gameOver();
+					}
+					else if (karts.every(k => !k.isPlayer == !k.active)) {
 						winScreen.classList.remove('hidden');
+						gameOver();
+					}
 				}
 	});
 });
