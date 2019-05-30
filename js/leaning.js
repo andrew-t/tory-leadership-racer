@@ -11,14 +11,19 @@ let leaning = 0;
 const maxNudge = 2,
 	mult = 2;
 
+export function reset() {
+	leaning = 0;
+}
+
 export default function nudge(d) {
-	if (!player.active) return;
-	d *= mult;
-	if (d > maxNudge) d = maxNudge;
-	if (d < -maxNudge) d = -maxNudge;
-	leaning += d;
-	if (leaning > 100) leaning = 100;
-	if (leaning < -100) leaning = -100;
+	if (player.active) {
+		d *= mult;
+		if (d > maxNudge) d = maxNudge;
+		if (d < -maxNudge) d = -maxNudge;
+		leaning += d;
+		if (leaning > 100) leaning = 100;
+		if (leaning < -100) leaning = -100;
+	}
 	if (leaning > 0) {
 		leftMeter.style.transform = `scale(0, 1)`;
 		rightMeter.style.transform = `scale(${ leaning / 100 }, 1)`;
@@ -52,6 +57,7 @@ onFrame(() => {
 		player.drive *= 0.3;
 	if (leaning < -99) {
 		player.active = false;
-		newspaper(`${player.character.name} DRIFTS TOO FAR LEFT AND JOINS CHANGE UK`, true);
+		newspaper(`${player.character.name} DRIFTS TOO FAR LEFT AND JOINS CHANGE UK`);
+		document.getElementById('lose-screen').classList.remove('hidden');
 	}
 });

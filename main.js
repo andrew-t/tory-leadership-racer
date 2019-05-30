@@ -1,10 +1,14 @@
 import { scene, onFrame } from './js/init.js';
-import { karts, player } from './js/the-grid.js';
+import { karts, player, resetKarts } from './js/the-grid.js';
 import { parliamentPolygon, simpleParliament } from './js/track.js';
 import newspaper from './js/newspaper.js';
 import './js/char-select.js';
+import startRace from './js/may.js';
+import { reset as resetLeaning } from './js/leaning.js';
 
 newspaper('THERESA MAY RESIGNS, IDIOT MAKES GAME');
+
+let winScreen, loseScreen;
 
 console.log('Stats for the racers:');
 karts.forEach(k => {
@@ -25,8 +29,11 @@ karts.forEach(k => {
 					k.active = false;
 					newspaper(laps == 7
 							? `${karts.find(k => k.active).character.name} BECOMES PRIME MINISTER`
-							: `${k.character.name} ELIMINATED IN ROUND ${laps}`,
-						(laps == 7) || !player.active);
+							: `${k.character.name} ELIMINATED IN ROUND ${laps}`);
+					if (!player.active)
+						loseScreen.classList.remove('hidden');
+					else if (karts.every(k => !k.isPlayer == !k.active))
+						winScreen.classList.remove('hidden');
 				}
 	});
 });
@@ -48,4 +55,19 @@ setInterval(() => {
 
 function round(n) {
 	return n.toFixed(2);
+}
+
+document.addEventListener('DOMContentLoaded', e => {
+	document.getElementById('start-again').addEventListener('click', reset);
+	document.getElementById('play-again').addEventListener('click', reset);
+	winScreen = document.getElementById('win-screen');
+	loseScreen = document.getElementById('lose-screen');
+});
+function reset(e) {
+	if (e) e.preventDefault();
+	resetKarts();
+	startRace();
+	resetLeaning();
+	winScreen.classList.add('hidden');
+	loseScreen.classList.add('hidden');
 }

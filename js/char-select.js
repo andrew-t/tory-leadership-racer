@@ -48,8 +48,10 @@ function next() {
 
 function updateDom() {
 	document.getElementById('character-name').innerHTML = chars[7].name;
-	for (let i = 0; i < karts.length; ++i)
+	for (let i = 0; i < karts.length; ++i) {
 		karts[i].updateFilename(`res/${chars[i].filename}.png`);
+		karts[i].character = chars[i];
+	}
 }
 
 document.addEventListener('DOMContentLoaded', e => {

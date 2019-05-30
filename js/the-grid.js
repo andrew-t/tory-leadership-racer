@@ -6,12 +6,23 @@ import pad from './gamepad.js';
 export const karts = [];
 export const player = new Player();
 
+export function resetKarts() {
+	for (let i = 0; i < 8; ++i) {
+		const kart = karts[i];
+		kart.position.x = 85 - (i & 1) * 5;
+		kart.position.z = -5 - i * 5;
+		kart.angle = Math.PI * 0.5;
+		kart.speed = { x: 0, y: 0 };
+		kart.active = false;
+		kart.unlaps = 1; // cross the start line once to start lap 1
+		kart.laps = 0;
+		kart.lastTheta = 0.9; // you start just behind the line
+	}
+}
+
 for (let i = 0; i < 8; ++i) {
 	// if (i % 7) continue; // debug - one ai
 	const kart = (i == 7) ? player : new Enemy();
-	kart.position.x = 85 - (i & 1) * 5;
-	kart.position.z = -5 - i * 5;
-	kart.angle = Math.PI * 0.5;
 	kart.addToScene(scene);
 	karts.push(kart);
 	onFrame(() => {
@@ -42,3 +53,4 @@ for (let i = 0; i < 8; ++i) {
 		}
 	});
 }
+resetKarts();

@@ -102,7 +102,7 @@ body {
 	transition-timing-function: ease-out;
 }
 
-#splash, #touch-controls, #char-select {
+#splash, #touch-controls, #char-select, #win-screen, #lose-screen {
 	display: none;
 	position: absolute;
 	left: 0;
@@ -167,7 +167,7 @@ body {
 }
 #touch-controls #right:before { content: 'RIGHT'; }
 
-#splash {
+#splash, #win-screen, #lose-screen {
 	background: rgba(0, 0, 0, 0.5);
 	padding: 5vmin;
 	font-size: 4vmin;
@@ -242,4 +242,26 @@ a:hover { color: red; }
 	padding: 9vmin 0;
 	text-transform: uppercase;
 	cursor: pointer;
+}
+
+#win-screen:not(.hidden), #lose-screen:not(.hidden) { display: block; }
+
+a.big-button {
+	background: blue;
+	display: block;
+	width: 50vmin;
+	height: 10vmin;
+	border-radius: 5vmin;
+	box-sizing: border-box;
+	line-height: 10vmin;
+	margin: 5vmin auto;
+	text-decoration: none;
+	box-shadow: 0 2vmin 2vmin black;
+	cursor: pointer;
+}
+a.big-button:hover {
+	background: yellow;
+}
+a.big-button:focus {
+	box-shadow: 0 0 0 0.2vmin yellow;
 }
