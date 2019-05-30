@@ -6,7 +6,7 @@ import './js/char-select.js';
 import startRace, { gameOver } from './js/may.js';
 import { reset as resetLeaning } from './js/leaning.js';
 
-newspaper('THERESA MAY RESIGNS, IDIOT MAKES GAME');
+newspaper('Tory leadership contest: Iain Duncan Smith warns of ‘chaos’');
 
 let winScreen, loseScreen;
 
