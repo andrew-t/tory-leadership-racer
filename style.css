@@ -110,22 +110,28 @@ body {
 	width: 100vw;
 	height: 100vh;
 }
-@media (hover: none) { #touch-controls { display: block; } }
+@media (hover: none) { #touch-controls {
+	display: block;
+	/* this prevents them from interfering with normal mouse-emulated touch operation even when they're technically obscuring ui elements: */
+	pointer-events: none;
+} }
 
 #touch-controls div {
 	font-family: 'Patrick Hand';
-	width: 20vmin;
-	height: 20vmin;
+	width: 30vmin;
+	height: 30vmin;
+	border-radius: 15vmin;
 	position: absolute;
 	box-shadow: 0 2vmin 2vmin black;
 	color: white;
-	font-size: 8vmin;
+	font-size: 12vmin;
 	text-align: center;
 	box-sizing: border-box;
-	padding-top: 6vmin;
+	padding-top: 9vmin;
 	line-height: 1;
-	border-radius: 10vmin;
 	opacity: 0.5;
+	/* override earlier 'none' value so we can detected touches: */
+	pointer-events: all;
 }
 #touch-controls div.active { opacity: 1; }
 
@@ -137,7 +143,7 @@ body {
 #touch-controls #gas:before { content: 'GO'; }
 
 #touch-controls #brake {
-	right: 35vmin;
+	right: 45vmin;
 	bottom: 10vmin;
 	background: red;
 }
@@ -149,7 +155,7 @@ body {
 	}
 	#touch-controls #gas {
 		right: 10vmin;
-		bottom: 35vmin;
+		bottom: 45vmin;
 	}
 }
 
@@ -161,7 +167,7 @@ body {
 #touch-controls #left:before { content: 'LEFT'; }
 
 #touch-controls #right {
-	left: 35vmin;
+	left: 45vmin;
 	bottom: 15vmin;
 	background: blue;
 }
