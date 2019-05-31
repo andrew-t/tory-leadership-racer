@@ -1,4 +1,4 @@
-import { scene, onFrame } from './init.js';
+import { scene, camera, onFrame } from './init.js';
 import Enemy from './ai.js';
 import Player from './Player.js';
 import pad from './gamepad.js';
@@ -19,6 +19,7 @@ export function resetKarts() {
 		kart.laps = 0;
 		kart.lastTheta = 0.9; // you start just behind the line
 	}
+	player.setCamera(camera);
 }
 
 for (let i = 0; i < characters.length; ++i) {

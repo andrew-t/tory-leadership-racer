@@ -1,11 +1,11 @@
-import { scene, onFrame } from './js/init.js';
+import { scene, camera, onFrame } from './js/init.js';
 import { karts, player, resetKarts } from './js/the-grid.js';
 import { parliamentPolygon, simpleParliament } from './js/track.js';
 import newspaper from './js/newspaper.js';
 import './js/char-select.js';
 import startRace, { gameOver } from './js/may.js';
 import { reset as resetLeaning } from './js/leaning.js';
-
+window.camera = camera; window.player = player;
 newspaper('Tory leadership contest: Iain Duncan Smith warns of ‘chaos’', 5000);
 
 let winScreen, loseScreen;

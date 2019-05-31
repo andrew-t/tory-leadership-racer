@@ -1,7 +1,8 @@
 import activateTheresaMay from './may.js';
 import gamepad from './gamepad.js'
 import chars from './contenders.js';
-import { karts } from './the-grid.js'
+import { karts, player } from './the-grid.js';
+import { camera } from './init.js';
 
 let startReleased = false, done = false, stickReleased, started = false;
 
@@ -35,6 +36,7 @@ function update() {
 	if (stickReleased && gamepad.stick.x > 0.9) {
 		next(); stickReleased = false;
 	}
+	player.setCamera(camera);
 }
 
 function startRace() {

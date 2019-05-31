@@ -85,21 +85,26 @@ export default class Player extends Kart {
 			this.lastY = pad.y;
 
 			this.steering = pad.stick.x * steer;
-			// position camera 8m behind the player and 3.5m above them,
-			// looking at a point 1m above them
-			camera.position.subVectors(
-				this.position,
-				this.driveVector()
-					.applyAxisAngle(yAxis, Math.abs(pad.camStick.x) > 0.05 ? pad.camStick.x * 3 : 0)
-					.multiplyScalar(8));
-			camera.position.y = 2.5;
-			camera.lookAt(this.position);
-			camera.position.y += 1;
+			if (this.active) this.setCamera(camera);
 
 			const d = parliamentDistance({ x: this.position.x, y: this.position.z });
 			// console.log('Current distance:', d);
 			adjustLeaning((23 - d) * delta);
 		});
 
+	}
+
+	setCamera(camera) {
+		// position camera 8m behind the player and 3.5m above them,
+		// looking at a point 1m above them
+		camera.position.subVectors(
+			this.position,
+			this.driveVector()
+				.applyAxisAngle(yAxis,
+					Math.abs(pad.camStick.x) > 0.05 ? pad.camStick.x * 5 : 0)
+				.multiplyScalar(8));
+		camera.position.y = 2.5;
+		camera.lookAt(this.position);
+		camera.position.y += 1;
 	}
 }
