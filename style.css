@@ -4,7 +4,11 @@ body {
 	padding: 0;
 	margin: 0;
 	overflow: hidden;
-	user-select: none;
+}
+
+* {
+	user-select: none !important;
+	-moz-user-select: none !important;
 }
 
 #scene {
