@@ -31,8 +31,9 @@ onFrame(() => {
 			const dx = tree.position.x - kart.position.x,
 				dy = tree.position.z - kart.position.z,
 				d2 = dx * dx + dy * dy;
-			if (d2 < 4) {
+			if (d2 < 6) {
 				const d = Math.sqrt(d2);
+				console.log('Kart hit a tree!');
 				kart.collide(d, { x: dx / d, y: dy / d });
 			}
 		}
