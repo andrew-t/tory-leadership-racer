@@ -25,14 +25,15 @@ let animationStart = null,
 beforeFrame((scene, camera) => {
 	if (animationStart) {
 		const now = Date.now() - animationStart,
-			p = (now > 4000) ? (now > 7000) ? 1 : (now - 4000) / 3000 : 0;
+			p = (now > 4000) ? (now > 7000) ? 1 : (now - 4000) / 3000 : 0,
+			q = 1 - p;
 		// camera ends up at 85, 4.5, -44 to look at 85, 3.5, -36
 		// may is at 90, 2, -5
 		// camera on may can be at 90, 2, -15
 		camera.position.set(
-			finalCameraPosition.x + 5 * p,
-			finalCameraPosition.y - 1.5 * p + Math.cos(p * Math.PI) * 8,
-			finalCameraPosition.z + 28 * p);
+			finalCameraPosition.x + 10 * q,
+			finalCameraPosition.y + Math.sin(p * Math.PI) * 8,
+			finalCameraPosition.z + 28 * q);
 	}
 });
 
