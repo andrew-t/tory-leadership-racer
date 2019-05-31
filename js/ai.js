@@ -16,6 +16,7 @@ export default class Enemy extends Kart {
 		this.preferredSpeedSquared = Math.random() * 2.5 + 1;
 		this.preferredCorneringSpeedSquared = Math.random() * 1.5 + 0.8;
 		this.steeriness = Math.random() * 0.6 + 0.2;
+		this.steerSpriteEffect = 0;
 
 		onFrame(() => {
 			const pos = { x: this.position.x, y: this.position.z },
