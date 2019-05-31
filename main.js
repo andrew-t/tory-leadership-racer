@@ -4,6 +4,7 @@ import { parliamentPolygon, simpleParliament } from './js/track.js';
 import newspaper from './js/newspaper.js';
 import './js/char-select.js';
 import startRace, { gameOver } from './js/may.js';
+import { reset as resetTrees } from './js/trees.js';
 import { reset as resetLeaning } from './js/leaning.js';
 
 newspaper('Tory leadership contest: Iain Duncan Smith warns of ‘chaos’', 5000);
@@ -74,6 +75,7 @@ function reset(e) {
 	resetKarts();
 	startRace();
 	resetLeaning();
+	resetTrees();
 	winScreen.classList.add('hidden');
 	loseScreen.classList.add('hidden');
 }
