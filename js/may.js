@@ -30,7 +30,8 @@ beforeFrame((scene, camera) => {
 		// camera ends up at 85, 4.5, -44 to look at 85, 3.5, -36
 		// may is at 90, 2, -5
 		// camera on may can be at 90, 2, -15
-		camera.position.set(
+		if (p == 1) player.setCamera(camera);
+		else camera.position.set(
 			finalCameraPosition.x + 10 * q,
 			finalCameraPosition.y + Math.sin(p * Math.PI) * 8,
 			finalCameraPosition.z + 28 * q);
