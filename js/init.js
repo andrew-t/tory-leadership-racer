@@ -22,8 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const container = document.getElementById('scene'),
 		ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
-	camera.position.set(320, 90, 320);
-	camera.lookAt(0, 3, 0);
 	scene.add(ambientLight);
 
 	let parliament;

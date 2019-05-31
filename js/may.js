@@ -1,7 +1,7 @@
 import { Sprite } from './Sprite.js';
 import newspaper from './newspaper.js';
-import { karts } from './the-grid.js';
-import { scene } from './init.js';
+import { karts, player } from './the-grid.js';
+import { scene, camera, beforeFrame } from './init.js';
 
 const may = new Sprite('res/may.png', 2);
 may.setSize(4);
@@ -20,21 +20,41 @@ export function gameOver() {
 	music.currentTime = 0;
 }
 
+let animationStart = null,
+	finalCameraPosition = new THREE.Vector3();
+beforeFrame((scene, camera) => {
+	if (animationStart) {
+		const now = Date.now() - animationStart,
+			p = (now > 4000) ? (now > 7000) ? 1 : (now - 4000) / 3000 : 0,
+			q = 1 - p;
+		// camera ends up at 85, 4.5, -44 to look at 85, 3.5, -36
+		// may is at 90, 2, -5
+		// camera on may can be at 90, 2, -15
+		camera.position.set(
+			finalCameraPosition.x + 10 * q,
+			finalCameraPosition.y + Math.sin(p * Math.PI) * 8,
+			finalCameraPosition.z + 28 * q);
+	}
+});
+
 export default function start() {
 	console.log('Starting');
 	document.body.classList.remove('char-select');
-	let i, start;
+	let i, hankyStart;
+	animationStart = Date.now();
+	player.setCamera(camera);
+	finalCameraPosition.copy(camera.position);
 	newspaper('THERESA MAY TO GIVE SPEECH OUTSIDE PARLIAMENT');
 	setTimeout(() => may.setSprite(2), 2500);
 	setTimeout(() => may.setSprite(1), 3500);
 	setTimeout(() => {
 		may.setSprite(3);
-		hanky.position.set(90.5, 4, -5.05);
-		start = Date.now();
+		hanky.position.set(88.5, 4, -5.05);
+		hankyStart = Date.now();
 		i = setInterval(() => {
-			const t = (Date.now() - start) / 2000,
+			const t = (Date.now() - hankyStart) / 2000,
 				theta = t * Math.PI * 2;
-			hanky.position.set(90.5 + Math.sin(theta),
+			hanky.position.set(88.5 + Math.sin(theta),
 				4 - 1.5 * t - (1 - Math.abs(Math.sin(theta))) * 0.5,
 				-5.05);
 			hanky.setSprite(0, (t * 8) % 1 > 0.5);
@@ -42,9 +62,10 @@ export default function start() {
 	}, 4000);
 	setTimeout(() => may.setSprite(0), 5000);
 	setTimeout(() => {
+		animationStart = false;
 		karts.forEach(k => k.active = true);
 		clearInterval(i);
-		hanky.position.set(90.5, 0.25, -5.05);
+		hanky.position.set(88.5, 0.25, -5.05);
 		music.play();
 	}, 8000);
 }

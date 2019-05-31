@@ -1,4 +1,4 @@
-import { scene, onFrame } from './js/init.js';
+import { scene, camera, onFrame } from './js/init.js';
 import { karts, player, resetKarts } from './js/the-grid.js';
 import { parliamentPolygon, simpleParliament } from './js/track.js';
 import newspaper from './js/newspaper.js';
@@ -6,7 +6,7 @@ import './js/char-select.js';
 import startRace, { gameOver } from './js/may.js';
 import { reset as resetLeaning } from './js/leaning.js';
 
-newspaper('Tory leadership contest: Iain Duncan Smith warns of ‘chaos’');
+newspaper('Tory leadership contest: Iain Duncan Smith warns of ‘chaos’', 5000);
 
 let winScreen, loseScreen;
 
@@ -27,9 +27,11 @@ karts.forEach(k => {
 			for (const k of karts)
 				if (k.active && k.laps < laps) {
 					k.active = false;
-					newspaper(laps == 7
+					const lastLap = (laps == karts.length - 1);
+					newspaper(lastLap
 							? `${karts.find(k => k.active).character.name} BECOMES PRIME MINISTER`
-							: `${k.character.name} ELIMINATED IN ROUND ${laps}`);
+							: `${k.character.name} ELIMINATED IN ROUND ${laps}`,
+						lastLap ? 5000 : null);
 					if (!player.active) {
 						loseScreen.classList.remove('hidden');
 						gameOver();
