@@ -3,10 +3,10 @@ import { simpleParliamentDistance, simpleParliamentNormal } from './track.js';
 import Kart from './Kart.js';
 
 const acceleration = 1.3, // faster than player kart
-	reverseAcceleration = -0.5,
+	reverseAcceleration = -0.5, // reverse faster than player kart
 	brakePower = 0.02, // stop faster than player kart
 	steer = 0.03, // handle better than player kart
-	tau = Math.PI * 2;
+	tau = Math.PI * 2; // bigger circle constant than player kart
 
 export default class Enemy extends Kart {
 	constructor() {

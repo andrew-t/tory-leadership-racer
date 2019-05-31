@@ -8,7 +8,6 @@ const acceleration = 0.6,
 	reverseAcceleration = -0.3,
 	brakePower = 0.1,
 	steer = 0.008,
-	tau = Math.PI * 2,
 	yAxis = new THREE.Vector3(0, 1, 0);
 
 class Button {
