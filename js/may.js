@@ -25,7 +25,7 @@ let animationStart = null,
 beforeFrame((scene, camera) => {
 	if (animationStart) {
 		const now = Date.now() - animationStart,
-			p = (now > 4000) ? (now > 7000) ? 1 : (now - 4000) / 3000 : 0,
+			p = (now > 4500) ? (now > 7000) ? 1 : (now - 4500) / 2500 : 0,
 			q = 1 - p;
 		// camera ends up at 85, 4.5, -44 to look at 85, 3.5, -36
 		// may is at 90, 2, -5
@@ -42,6 +42,7 @@ export default function start() {
 	document.body.classList.remove('char-select');
 	let i, hankyStart;
 	animationStart = Date.now();
+	hanky.position.set(0, -5, 0);
 	player.setCamera(camera);
 	finalCameraPosition.copy(camera.position);
 	newspaper('THERESA MAY TO GIVE SPEECH OUTSIDE PARLIAMENT');
@@ -49,14 +50,14 @@ export default function start() {
 	setTimeout(() => may.setSprite(1), 3500);
 	setTimeout(() => {
 		may.setSprite(3);
-		hanky.position.set(88.5, 4, -5.05);
+		hanky.position.set(88.5, 4, -6.5);
 		hankyStart = Date.now();
 		i = setInterval(() => {
 			const t = (Date.now() - hankyStart) / 2000,
 				theta = t * Math.PI * 2;
 			hanky.position.set(88.5 + Math.sin(theta),
 				4 - 1.5 * t - (1 - Math.abs(Math.sin(theta))) * 0.5,
-				-5.05);
+				-6.5);
 			hanky.setSprite(0, (t * 8) % 1 > 0.5);
 		});
 	}, 4000);
@@ -65,7 +66,7 @@ export default function start() {
 		animationStart = false;
 		karts.forEach(k => k.active = true);
 		clearInterval(i);
-		hanky.position.set(88.5, 0.25, -5.05);
+		hanky.position.set(88.5, 0.25, -6.5);
 		music.play();
 	}, 8000);
 }
