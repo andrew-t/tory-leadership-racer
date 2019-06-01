@@ -2,7 +2,7 @@ import { scene, camera, onFrame } from './js/init.js';
 import { karts, player, resetKarts } from './js/the-grid.js';
 import { parliamentPolygon, simpleParliament } from './js/track.js';
 import newspaper from './js/newspaper.js';
-import './js/char-select.js';
+import { start as charSelect } from './js/char-select.js';
 import startRace, { gameOver } from './js/may.js';
 import { reset as resetTrees } from './js/trees.js';
 import { reset as resetLeaning } from './js/leaning.js';
@@ -69,11 +69,16 @@ document.addEventListener('DOMContentLoaded', e => {
 	document.getElementById('play-again').addEventListener('click', reset);
 	winScreen = document.getElementById('win-screen');
 	loseScreen = document.getElementById('lose-screen');
+	reset();
+	document.getElementById('start').addEventListener('click', charSelect);
 });
+function restart(e) {
+	reset(e);
+	startRace();
+}
 function reset(e) {
 	if (e) e.preventDefault();
 	resetKarts();
-	startRace();
 	resetLeaning();
 	resetTrees();
 	winScreen.classList.add('hidden');

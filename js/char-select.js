@@ -14,11 +14,7 @@ function hold() {
 }
 hold();
 
-document.addEventListener('DOMContentLoaded', e => {
-	document.getElementById('start').addEventListener('click', start);
-});
-
-function start() {
+export function start() {
 	if (document.readyState != 'complete') return;
 	started = true;
 	document.body.classList.remove('splash');
