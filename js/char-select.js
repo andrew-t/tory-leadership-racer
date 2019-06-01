@@ -7,8 +7,10 @@ import { camera } from './init.js';
 let startReleased = false, done = false, stickReleased, started = false;
 
 function hold() {
-	if (gamepad.start) start();
-	else if (started) requestAnimationFrame(hold);
+	if (!started) {
+		requestAnimationFrame(hold);
+		if (gamepad.start) start();
+	}
 }
 hold();
 
@@ -17,6 +19,7 @@ document.addEventListener('DOMContentLoaded', e => {
 });
 
 function start() {
+	if (document.readyState != 'complete') return;
 	started = true;
 	document.body.classList.remove('splash');
 	document.body.classList.add('char-select');

@@ -79,3 +79,8 @@ function reset(e) {
 	winScreen.classList.add('hidden');
 	loseScreen.classList.add('hidden');
 }
+
+document.addEventListener('readystatechange', () => {
+	if (document.readyState == 'complete')
+		document.getElementById('start').classList.remove('disabled');
+});

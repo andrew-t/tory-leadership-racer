@@ -275,6 +275,14 @@ a.big-button:hover {
 a.big-button:focus {
 	box-shadow: 0 0 0 0.2vmin yellow;
 }
+a.big-button.disabled {
+	color: transparent;
+	opacity: 0.5;
+}
+a.big-button.disabled:before {
+	content: 'Loading...';
+	color: yellow;
+}
 
 h1 img {
 	max-width: 80vw;
@@ -378,4 +386,3 @@ input[type=range]:focus::-ms-fill-lower {
 input[type=range]:focus::-ms-fill-upper {
   background: #367ebd;
 }
-
