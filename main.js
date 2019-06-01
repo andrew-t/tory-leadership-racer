@@ -65,8 +65,8 @@ function round(n) {
 }
 
 document.addEventListener('DOMContentLoaded', e => {
-	document.getElementById('start-again').addEventListener('click', reset);
-	document.getElementById('play-again').addEventListener('click', reset);
+	document.getElementById('start-again').addEventListener('click', restart);
+	document.getElementById('play-again').addEventListener('click', restart);
 	winScreen = document.getElementById('win-screen');
 	loseScreen = document.getElementById('lose-screen');
 	reset();
