@@ -27,11 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	let parliament;
 	const loadingManager = new THREE.LoadingManager(() => scene.add(parliament)),
 		loader = new THREE.ColladaLoader(loadingManager);
-	loader.load( '../res/parliament/parliament.dae', collada =>
+	loader.load( 'res/parliament/parliament.dae', collada =>
 		parliament = collada.scene);
 
 	const textureLoader = new THREE.TextureLoader();
-	const floorTexture = textureLoader.load('../res/road1.jpg');
+	const floorTexture = textureLoader.load('res/road1.jpg');
 	floorTexture.wrapS = THREE.RepeatWrapping;
 	floorTexture.wrapT = THREE.RepeatWrapping;
 	floorTexture.repeat.set(600, 600);
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	floor.material.side = THREE.DoubleSide;
 	scene.add(floor);
 
-	const panoramaTexture = textureLoader.load('../res/panorama.jpg'),
+	const panoramaTexture = textureLoader.load('res/panorama.jpg'),
 		background = new THREE.Mesh(
 			new THREE.CylinderGeometry(300, 300, 160, 30),
 			new THREE.MeshBasicMaterial({ map: panoramaTexture }));
