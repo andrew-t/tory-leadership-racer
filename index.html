@@ -32,15 +32,42 @@
 		<a class="big-button" id="start">Start!</a>
 		<section>
 			<h2>Controls</h2>
-			<p>
-				On keyboard, A and D steer; S brakes and SHIFT is the accelerator. SPACE selects a kart.
-			</p><p>
-				On phones, you should see touch controls once the game starts.
-			</p><p>
-				Otherwise, plug in an Xbox controller and use A to accelerate and B to brake. The left stick steers and the right stick moves the camera. A selects a kart.
-			</p><p>
-				Click the button above to start.
-			</p>
+			<table>
+				<tbody>
+					<tr>
+						<th>Steer</th>
+						<td>Left control stick</td>
+						<td>A/D keys</td>
+						<td>Touch controls</td>
+					</tr><tr>
+						<th>Accelerate</th>
+						<td>A button</td>
+						<td>SHIFT key</td>
+						<td>Touch control</td>
+					</tr><tr>
+						<th>Brake</th>
+						<td>B button</td>
+						<td>S key</td>
+						<td>Touch control</td>
+					</tr><tr>
+						<th>Select kart</th>
+						<td>A button</td>
+						<td>SPACE bar</td>
+						<td>Touch control</td>
+					</tr><tr>
+						<th>Move camera</th>
+						<td>Right control stick</td>
+						<td></td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+		<section>
+			<h1>Difficulty</h1>
+			<input type="range" id="difficulty"
+				min="-1" max="1" step="0.02" value="0">
+			<span id="difficulty-label">Normal</span>
 		</section>
 		<section>
 			<h2>Instructions</h2>
@@ -85,10 +112,12 @@
 		<p>You may now attempt to deliver Brexit!</p>
 		<a class="big-button" href="http://github.andrewt.net/brexit-simulator">Deliver Brexit</a>
 		<a class="big-button" id="play-again">Play again</a>
+		Game by <a href="https://www.andrewt.net">Andrew</a>
 	</div>
 	<div id="lose-screen" class="hidden">
 		<h1>Game over!</h1>
 		<a class="big-button" id="start-again">Try again</a>
+		Game by <a href="https://www.andrewt.net">Andrew</a>
 	</div>
 	<div id="news" class="off">
 		<span id="headline">

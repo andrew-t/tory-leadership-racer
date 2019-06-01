@@ -1,19 +1,22 @@
 import { onFrame } from './init.js';
 import { simpleParliamentDistance, simpleParliamentNormal } from './track.js';
 import Kart from './Kart.js';
+import options from './options.js';
 
-const acceleration = 1.3, // faster than player kart
-	reverseAcceleration = -0.5, // reverse faster than player kart
+options.acceleration = 1.3; // faster than player kart
+const reverseAcceleration = -0.5, // reverse faster than player kart
 	brakePower = 0.02, // stop faster than player kart
 	steer = 0.03, // handle better than player kart
 	tau = Math.PI * 2; // bigger circle constant than player kart
+
+options.aiPrefSpeed = 2.5;
 
 export default class Enemy extends Kart {
 	constructor() {
 		super();
 		this.preferredDistance = Math.random() * 15 + 5;
 		this.lookAheadDistance = Math.random() * 15 + 5;
-		this.preferredSpeedSquared = Math.random() * 2.5 + 1;
+		this.preferredSpeedSquared = Math.random() * options.aiPrefSpeed + 1;
 		this.preferredCorneringSpeedSquared = Math.random() * 1.5 + 0.8;
 		this.steeriness = Math.random() * 0.6 + 0.2;
 		this.steerSpriteEffect = 0;
@@ -36,7 +39,8 @@ export default class Enemy extends Kart {
 			this.steering = dTheta * this.steeriness;
 			// while (this.steering < Math.PI) this.steering += tau;
 			// this.steering %= tau;
-			this.drive = speedSquared < this.preferredSpeedSquared ? acceleration : 0;
+			this.drive = speedSquared < this.preferredSpeedSquared
+				? options.acceleration : 0;
 			this.brake = 1;
 			if (this.steering > steer) {
 				this.steering = steer;
