@@ -4,6 +4,7 @@ export default shuffle([
 	{ name: 'Savij Jardin', filename: 'sajid' },
 	{ name: 'Andrea Loathsome', filename: 'andrea' },
 	{ name: 'James Cravenly', filename: 'james' },
+	{ name: 'Sam Dreamer', filename: 'james' },
 	{ name: 'Racer McFace', filename: 'esther' },
 	{ name: 'Kit Madhouse', filename: 'generic' },
 	{ name: 'Jeremy Hulture', filename: 'generic' },
