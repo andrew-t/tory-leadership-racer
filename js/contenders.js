@@ -9,7 +9,7 @@ export default shuffle([
 	{ name: 'Kit Madhouse', filename: 'generic' },
 	{ name: 'Jeremy Hulture', filename: 'generic' },
 	{ name: 'Demonic Raab', filename: 'generic' },
-	{ name: 'Hot Rod Stewart', filename: 'generic' },
+	{ name: 'Rory Stupid', filename: 'generic' },
 	{ name: 'Mark No-Hoper', filename: 'generic' },
 	{ name: 'Matt Half-Cocked', filename: 'generic' }
 ]);
