@@ -6,6 +6,7 @@ import { start as charSelect } from './js/char-select.js';
 import startRace, { gameOver } from './js/may.js';
 import { reset as resetTrees } from './js/trees.js';
 import { reset as resetLeaning } from './js/leaning.js';
+import cheats from './js/cheats.js';
 
 newspaper('Tory leadership contest: Iain Duncan Smith warns of ‘chaos’', 5000);
 
@@ -22,8 +23,16 @@ karts.forEach(k => {
 			steer: round(k.steeriness)
 		});
 	k.onLap(laps => {
+		if (cheats.prorogation) {
+			if (laps == 3) {
+				newspaper(`DEMONIC RAAB BECOMES PRIME MINISTER`, 5000);
+				winScreen.classList.remove('hidden');
+				gameOver();
+			}
+			return;
+		}
 		let n = 0;
-		for (const k of karts) if (k.laps === laps) ++n;
+		for (const k of karts) if (k.laps >= laps) ++n;
 		if (n + laps == karts.length)
 			for (const k of karts)
 				if (k.active && k.laps < laps) {

@@ -1,3 +1,5 @@
+import cheats from './cheats.js';
+
 export default shuffle([
 	{ name: 'Bojo the Clown', filename: 'boris' },
 	{ name: 'Biker Gove', filename: 'gove' },
@@ -15,6 +17,10 @@ export default shuffle([
 ]);
 
 function shuffle(arr) {
+
+	if (cheats.prorogation)
+		return [{ name: 'Demonic Raab', filename: 'generic' }];
+
 	for (let i = 0; i < arr.length; ++i) {
 		const j = Math.floor(Math.random() * (arr.length - i)) + i;
 		[ arr[i], arr[j] ] = [ arr[j], arr[i] ];
