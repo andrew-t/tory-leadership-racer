@@ -2,6 +2,7 @@ import { onFrame } from './init.js';
 import { simpleParliamentDistance, simpleParliamentNormal } from './track.js';
 import Kart from './Kart.js';
 import options from './options.js';
+import cheats from './cheats.js';
 
 options.acceleration = 1.3; // faster than player kart
 const reverseAcceleration = -0.5, // reverse faster than player kart
@@ -17,6 +18,10 @@ export default class Enemy extends Kart {
 		this.preferredDistance = Math.random() * 15 + 5;
 		this.lookAheadDistance = Math.random() * 15 + 5;
 		this.preferredSpeedSquared = Math.random() * options.aiPrefSpeed + 1;
+		if (cheats.meowmeowkart) {
+			this.preferredSpeedSquared = this.preferredSpeedSquared * 3 - 3;
+			this.stonedSteering = (Math.random() * 2 - 1) * steer;
+		}
 		this.preferredCorneringSpeedSquared = Math.random() * 1.5 + 0.8;
 		this.steeriness = Math.random() * 0.6 + 0.2;
 		this.steerSpriteEffect = 0;
@@ -37,6 +42,7 @@ export default class Enemy extends Kart {
 			else desiredAngle -= dDistance * 0.2;
 			const dTheta = (desiredAngle - this.angle + tau * 5.5) % tau - Math.PI;
 			this.steering = dTheta * this.steeriness;
+			if (cheats.meowmeowkart) this.steering = this.stonedSteering;
 			// while (this.steering < Math.PI) this.steering += tau;
 			// this.steering %= tau;
 			this.drive = speedSquared < this.preferredSpeedSquared
