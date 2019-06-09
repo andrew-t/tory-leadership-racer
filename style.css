@@ -21,9 +21,9 @@ body {
 
 #leaning {
 	position: absolute;
-	left: calc(10vw - 0.2vmin);
+	left: calc(25vw - 0.2vmin);
 	top: 5vh;
-	width: 80vw;
+	width: 50vw;
 	height: 5vh;
 	border: 0.2vmin solid white;
 	background: black;
@@ -34,14 +34,14 @@ body {
 	color: yellow;
 	font-family: 'Patrick Hand';
 	text-align: center;
-	width: 80vw;
+	width: 50vw;
 	display: block;
 	font-size: 3vh;
 	text-transform: uppercase;
 	text-shadow: 0 0.1vmin 0.5vmin black;
 }
 #left-wing, #right-wing {
-	width: 40vw;
+	width: 25vw;
 	height: 5vh;
 	position: absolute;
 	top: 0;
@@ -256,23 +256,34 @@ a:hover { color: red; }
 
 #win-screen:not(.hidden), #lose-screen:not(.hidden) { display: block; }
 
-a.big-button {
+a.big-button,
+a.small-button {
 	background: blue;
 	display: block;
-	width: 50vmin;
-	height: 10vmin;
-	border-radius: 5vmin;
 	box-sizing: border-box;
-	line-height: 10vmin;
-	margin: 5vmin auto;
 	text-decoration: none;
-	box-shadow: 0 2vmin 2vmin black;
 	cursor: pointer;
+	font-family: 'Patrick Hand';
+	width: 10em;
+	height: 2em;
+	border-radius: 1em;
+	line-height: 2em;
+	margin: 1em auto;
+	box-shadow: 0 0.4em 0.4em black;
+	text-align: center;
 }
-a.big-button:hover {
+a.small-button {
+	font-size: 2vmin;
+}
+a.big-button {
+	font-size: 5vmin;
+}
+a.big-button:hover,
+a.small-button:hover {
 	background: yellow;
 }
-a.big-button:focus {
+a.big-button:focus,
+a.small-button:focus {
 	box-shadow: 0 0 0 0.2vmin yellow;
 }
 a.big-button.disabled {
@@ -385,4 +396,10 @@ input[type=range]:focus::-ms-fill-lower {
 }
 input[type=range]:focus::-ms-fill-upper {
   background: #367ebd;
+}
+
+#abort {
+	position: absolute;
+	top: 2vmin;
+	left: 2vmin;
 }

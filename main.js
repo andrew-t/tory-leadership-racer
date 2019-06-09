@@ -3,7 +3,7 @@ import { karts, player, resetKarts } from './js/the-grid.js';
 import { parliamentPolygon, simpleParliament } from './js/track.js';
 import newspaper from './js/newspaper.js';
 import { start as charSelect } from './js/char-select.js';
-import startRace, { gameOver } from './js/may.js';
+import startRace, { music, gameOver } from './js/may.js';
 import { reset as resetTrees } from './js/trees.js';
 import { reset as resetLeaning } from './js/leaning.js';
 import cheats from './js/cheats.js';
@@ -23,6 +23,7 @@ karts.forEach(k => {
 			steer: round(k.steeriness)
 		});
 	k.onLap(laps => {
+		if (!player.active) return;
 		if (cheats.prorogation) {
 			if (laps == 3) {
 				newspaper(`DEMONIC RAAB BECOMES PRIME MINISTER`, 5000);
@@ -76,10 +77,13 @@ function round(n) {
 document.addEventListener('DOMContentLoaded', e => {
 	document.getElementById('start-again').addEventListener('click', restart);
 	document.getElementById('play-again').addEventListener('click', restart);
+	document.getElementById('win-title-screen').addEventListener('click', titleScreen);
+	document.getElementById('lose-title-screen').addEventListener('click', titleScreen);
 	winScreen = document.getElementById('win-screen');
 	loseScreen = document.getElementById('lose-screen');
 	reset();
 	document.getElementById('start').addEventListener('click', charSelect);
+	document.getElementById('abort').addEventListener('click', abortRace);
 });
 function restart(e) {
 	reset(e);
@@ -90,6 +94,23 @@ function reset(e) {
 	resetKarts();
 	resetLeaning();
 	resetTrees();
+	winScreen.classList.add('hidden');
+	loseScreen.classList.add('hidden');
+}
+
+function abortRace(e) {
+	if (e) e.preventDefault();
+	if (player.character.name == 'Jeremy Hulture')
+		newspaper('JEREMY HULTURE SAYS YOU MUST CARRY THE RACE TO TERM');
+	else titleScreen();
+}
+
+function titleScreen(e) {
+	reset(e);
+	music.pause();
+	music.currentTime = 0;
+	document.body.classList.add('splash');
+	document.body.classList.remove('char-select');
 	winScreen.classList.add('hidden');
 	loseScreen.classList.add('hidden');
 }

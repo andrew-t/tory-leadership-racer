@@ -13,7 +13,7 @@ const hanky = new Sprite('res/hanky.png', 1);
 hanky.setSize(0.5);
 hanky.addToScene(scene);
 
-const music = new Audio('res/music.mp3');
+export const music = new Audio('res/music.mp3');
 music.volume = 0.5;
 export function gameOver() {
 	music.pause();

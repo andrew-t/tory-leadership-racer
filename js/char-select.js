@@ -4,19 +4,10 @@ import chars from './contenders.js';
 import { karts, player } from './the-grid.js';
 import { camera } from './init.js';
 
-let startReleased = false, done = false, stickReleased, started = false;
-
-function hold() {
-	if (!started) {
-		requestAnimationFrame(hold);
-		if (gamepad.start) start();
-	}
-}
-hold();
+let startReleased = false, done = false, stickReleased;
 
 export function start() {
 	if (document.readyState != 'complete') return;
-	started = true;
 	document.body.classList.remove('splash');
 	document.body.classList.add('char-select');
 	updateDom();
