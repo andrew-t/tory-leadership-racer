@@ -11,9 +11,11 @@ export class Sprite {
 		this.map.repeat.set(1 / sheetSize, 1 / sheetSize);
 		this.mirror = false;
 		this.size = 1;
+		this.zOffset = 0;
 		this.position = new THREE.Vector3(0, 0, 0);
 		onFrame((scene, camera) => {
-			dir.copy(getCameraDirection(camera)).multiplyScalar(this.size * 0.5);
+			dir.copy(getCameraDirection(camera))
+				.multiplyScalar(this.size * 0.5 + this.zOffset);
 			dir.setY(dir.y * 0.25);
 			this.sprite.position.subVectors(this.position, dir);
 		});
