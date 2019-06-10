@@ -44,6 +44,9 @@ export class Sprite {
 		this.scene = scene;
 		scene.add(this.sprite);
 	}
+	removeFromScene(scene) {
+		scene.remove(this.sprite);
+	}
 
 	updateFilename(filename) {
 		this.map = textureLoader.load(filename);

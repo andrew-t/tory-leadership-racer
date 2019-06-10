@@ -120,7 +120,8 @@ body {
 	pointer-events: none;
 } }
 
-#touch-controls div {
+#touch-controls div,
+#fire-button {
 	font-family: 'Patrick Hand';
 	width: 30vmin;
 	height: 30vmin;
@@ -309,6 +310,7 @@ td, th { margin: 0; padding: 0.2em 0 0.2em 0.2em; }
 tr:nth-child(1) { background: rgba(0, 0, 128, 0.5); }
 tr:nth-child(2) { background: rgba(0, 96, 0, 0.5); }
 tr:nth-child(3) { background: rgba(128, 0, 0, 0.5); }
+tr:nth-child(4) { background: rgba(0, 0, 0, 0.5); }
 
 input { width: calc(100% - 41vmin - 2em); }
 input + span { display: inline-block; width: 41vmin; }
@@ -403,3 +405,20 @@ input[type=range]:focus::-ms-fill-upper {
 	top: 2vmin;
 	left: 2vmin;
 }
+
+#fire-button {
+	width: 20vmin;
+	height: 20vmin;
+	top: 5vmin;
+	right: 5vmin;
+	border: 1vmin solid black;
+	background: rgba(0, 0, 0, 0.5);
+	opacity: 1;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: 15vmin 15vmin;
+}
+#fire-button.bubble { background-image: url('../res/bubble.png'); }
+#fire-button.milkshake { background-image: url('../res/milkshake3.png'); }
+#fire-button.cannon { background-image: url('../res/cannonball.png'); }
+#fire-button.blue-shell { background-image: url('../res/blue-shell.png'); }

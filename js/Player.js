@@ -3,6 +3,7 @@ import Kart from './Kart.js';
 import pad from './gamepad.js';
 import { parliamentDistance } from './track.js';
 import adjustLeaning from './leaning.js';
+import { fireAsPlayer } from './inventory.js';
 
 const acceleration = 0.6,
 	reverseAcceleration = -0.3,
@@ -85,6 +86,8 @@ export default class Player extends Kart {
 
 			this.steering = pad.stick.x * steer;
 			if (this.active) this.setCamera(camera);
+
+			if (pad.fire) fireAsPlayer();
 
 			const d = parliamentDistance({ x: this.position.x, y: this.position.z });
 			// console.log('Current distance:', d);

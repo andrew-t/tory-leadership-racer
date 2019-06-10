@@ -1,5 +1,5 @@
 import { onFrame } from './init.js';
-import { DirectionalSprite } from './Sprite.js';
+import { Sprite, DirectionalSprite } from './Sprite.js';
 import {
 	parliamentDistance, parliamentNormal,
 	simpleParliamentDistance, simpleParliamentNormal
@@ -8,7 +8,8 @@ import contenders from './contenders.js';
 
 const coastFriction = 0.8,
 	driftFriction = 0.12,
-	tau = Math.PI * 2;
+	tau = Math.PI * 2,
+	spinOutDuration = 0.8;
 
 let nextCharacter = 0;
 
@@ -25,6 +26,11 @@ export default class Kart extends DirectionalSprite {
 		this.position.y = 1;
 		this.speed = { x: 0, y: 0 };
 
+		this.bubbleTime = 0;
+		this.bubbleSprite = new Sprite('res/bubble.png', 1);
+		this.bubbleSprite.setSize(3);
+		this.spinOutTime = 0;
+
 		this.active = false;
 
 		this.lapListeners = [];
@@ -37,13 +43,18 @@ export default class Kart extends DirectionalSprite {
 		// also this.steering
 
 		onFrame((scene, camera, delta) => {
+			if (this.bubbleTime < delta) this.bubbleTime = 0;
+			else this.bubbleTime -= delta;
+			if (this.spinOutTime < delta) this.spinOutTime = 0;
+			else this.spinOutTime -= delta;
+
 			// acceleration
 			this.forward = {
 				x: Math.cos(this.angle),
 				y: Math.sin(this.angle)
 			};
 			this.left = { x: -this.forward.y, y: this.forward.x };
-			if (this.active) {
+			if (this.active && !this.spinOutTime) {
 				this.speed.x += this.drive * this.forward.x * delta;
 				this.speed.y += this.drive * this.forward.y * delta;
 			}
@@ -61,10 +72,15 @@ export default class Kart extends DirectionalSprite {
 				vecByScal(this.left,
 					this.drift * Math.pow(driftFriction, delta)));
 			// steering - kind of a turning circle but you can also spin slightly on the spot
-			if (this.active) this.angle += this.steering * (1 + this.coast);
+			if (this.active && !this.spinOutTime)
+				this.angle += this.steering * (1 + this.coast);
 			// and finally movement
 			this.position.x += this.speed.x;
 			this.position.z += this.speed.y;
+
+			if (this.spinOutTime)
+				this.steering = (this.spinOutTime / spinOutDuration)
+					* tau / this.steerSpriteEffect;
 
 			// oh, and you can hit buildings
 			const pos = { x: this.position.x, y: this.position.z };
@@ -74,6 +90,12 @@ export default class Kart extends DirectionalSprite {
 			// imaginary outer-building!
 			const d2 = 40 - simpleParliamentDistance(pos);
 			if (d2 < 0) this.collide(d2, neg(simpleParliamentNormal(pos)));
+
+			// bubble sprite
+			this.bubbleSprite.position.set(
+				this.position.x,
+				this.bubbleTime > 0 ? this.position.y : -200,
+				this.position.z);
 
 			const theta = ((Math.atan2(this.position.z, this.position.x) + tau) / tau) % 1;
 			if ((this.lastTheta > 0.8 || this.lastTheta < 0.2) &&
@@ -97,6 +119,11 @@ export default class Kart extends DirectionalSprite {
 			}
 			this.lastTheta = theta;
 		});
+	}
+
+	addToScene(scene) {
+		super.addToScene(scene);
+		this.bubbleSprite.addToScene(scene);
 	}
 
 	face(x, y) {
@@ -125,17 +152,22 @@ export default class Kart extends DirectionalSprite {
 	onLap(cb) {
 		this.lapListeners.push(cb);
 	}
+
+	itemHit() {
+		console.log(this.character.name, 'is out for a spin!');
+		this.spinOutTime = spinOutDuration;
+	}
 }
 
-function dot(a, b) {
+export function dot(a, b) {
 	return a.x * b.x + a.y * b.y;
 }
-function vecByScal(v, s) {
+export function vecByScal(v, s) {
 	return { x: v.x * s, y: v.y * s };
 }
-function addVec(a, b) {
+export function addVec(a, b) {
 	return { x: a.x + b.x, y: a.y + b.y };
 }
-function neg(v) {
+export function neg(v) {
 	return { x: -v.x, y: -v.y };
 }

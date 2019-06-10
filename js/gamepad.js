@@ -79,7 +79,7 @@ function update() {
 	gamepad.camStick.y = deadZone(i.axes[3]); // -ve is up here
 	gamepad.accelerate = i.buttons[0].pressed || heldKeys.has('SHIFT') || touchControls.gas;
 	gamepad.brake = i.buttons[1].pressed || heldKeys.has('S') || touchControls.brake;
-	gamepad.fire = i.buttons[2].pressed;
+	gamepad.fire = i.buttons[2].pressed || heldKeys.has(' ');
 	gamepad.y = i.buttons[3].pressed;
 	gamepad.start = i.buttons[9].pressed || i.buttons[0].pressed || heldKeys.has(' ') || touchControls.gas;
 	gamepad.raw = i;

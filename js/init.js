@@ -14,6 +14,9 @@ export function beforeFrame(callback) {
 export function onFrame(callback) {
 	frameCallbacks.push(callback);
 }
+export function removeFrameListener(callback) {
+	frameCallbacks.splice(frameCallbacks.indexOf(callback), 1);
+}
 
 document.addEventListener('DOMContentLoaded', () => {
 
