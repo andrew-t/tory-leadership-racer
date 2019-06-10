@@ -1,26 +1,31 @@
 import cheats from './cheats.js';
 
-export default shuffle([
+let contenders = [
 	{ name: 'Bojo the Clown', filename: 'boris' },
 	{ name: 'Biker Gove', filename: 'gove' },
 	{ name: 'Savij Jardin', filename: 'sajid' },
 	{ name: 'Andrea Loathsome', filename: 'andrea' },
-	{ name: 'James Cravenly', filename: 'james' },
-	{ name: 'Sam Dreamer', filename: 'james' },
 	{ name: 'Racer McFace', filename: 'esther' },
-	{ name: 'Kit Madhouse', filename: 'generic' },
 	{ name: 'Jeremy Hulture', filename: 'generic' },
 	{ name: 'Demonic Raab', filename: 'generic' },
 	{ name: 'Rory Stupid', filename: 'generic' },
 	{ name: 'Mark No-Hoper', filename: 'generic' },
 	{ name: 'Matt Half-Cocked', filename: 'generic' }
-]);
+];
+
+if (cheats.amorosi) contenders.push(
+	{ name: 'Sam Dreamer', filename: 'james' },
+	{ name: 'Kit Madhouse', filename: 'generic' },
+	{ name: 'James Cravenly', filename: 'james' },
+	{ name: 'Theresa Maystn’t', filename: 'andrea' }
+);
+
+if (cheats.prorogation)
+	contenders = [{ name: 'Demonic Raab', filename: 'generic' }];
+
+export default shuffle(contenders);
 
 function shuffle(arr) {
-
-	if (cheats.prorogation)
-		return [{ name: 'Demonic Raab', filename: 'generic' }];
-
 	for (let i = 0; i < arr.length; ++i) {
 		const j = Math.floor(Math.random() * (arr.length - i)) + i;
 		[ arr[i], arr[j] ] = [ arr[j], arr[i] ];
