@@ -20,7 +20,7 @@ export function reset() {
 		positionTree(tree);
 		if (i >= options.treeCount) tree.position.y = -100;
 	}
-	for (let i = 0; i < 20; ++i) {
+	for (let i = 0; i < 35; ++i) {
 		if (!blocks[i]) {
 			blocks[i] = new Sprite('res/block.png', 1);
 			blocks[i].setSize(2);

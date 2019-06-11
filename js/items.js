@@ -5,12 +5,16 @@ import { distanceSquared } from './trees.js';
 import { addVec, vecByScal, dot } from './Kart.js';
 import { parliamentDistance, parliamentNormal } from './track.js';
 
+const tau = Math.PI * 2;
+
 export class BananaPeel extends Sprite {
 	constructor(filename, owner) {
 		super(filename, 1);
 		this.size = 1.5;
 		this.addToScene(scene);
+		this.owner = owner;
 		this.selfActivationTime = Date.now() + 1000;
+		this.position.copy(owner.position);
 
 		this.destroy = () => {
 			this.removeFromScene(scene);
@@ -23,7 +27,8 @@ export class BananaPeel extends Sprite {
 					continue;
 				const { d2 } = distanceSquared(kart, this);
 				if (d2 < 4) {
-					console.log('Item hit', kart.character.name);
+					console.log(owner.character.name + '\'s item hit',
+						kart.character.name);
 					kart.itemHit();
 					this.destroy();
 				}
@@ -85,9 +90,38 @@ export function cannonade(kart) {
 
 export class BlueShell extends BananaPeel {
 	constructor(kart) {
-		super('res/blue-shell.png');
-		this.frame = delta => {
+		super('res/blue-shell.png', kart);
+	}
 
-		};
+	onFrame(delta) {
+		const lastKart = karts
+				.map(k => ({
+					kart: k,
+					pos: k.lastTheta + k.laps - k.unlaps
+				}))
+				.reduce((p, n) => (n.pos < p.pos) ? n : p)
+				.kart,
+			theta = ((Math.atan2(this.position.z, this.position.x) + tau) / tau) % 1,
+			diff = ((lastKart.lastTheta - theta) + 1) % 1;
+			if (diff > 0.2 && diff < 0.95) {
+				// shell and player aren't too close, just zoom round the track
+				const pos = { x: this.position.x, y: this.position.z },
+					left = parliamentNormal(pos),
+					forwards = { x: -left.y, y: left.x };
+				this.position.x += forwards.x * delta * 40;
+				this.position.z += forwards.y * delta * 40;
+			} else {
+				// shell's pretty near to player, just home in
+				const { dx, dy, d2 } = distanceSquared(this, lastKart),
+					d = Math.sqrt(d2);
+				this.position.x += dx * 40 / d;
+				this.position.z += dy * 40 / d;
+			}
+	}
+
+	onHitParliament(pos, d) {
+		const n = parliamentNormal(pos);
+		this.position.x += n.x * 0.2;
+		this.position.z += n.y * 0.2;
 	}
 }
