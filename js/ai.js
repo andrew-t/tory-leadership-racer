@@ -10,14 +10,12 @@ const reverseAcceleration = -60, // reverse faster than player kart
 	steer = 0.03, // handle better than player kart
 	tau = Math.PI * 2; // bigger circle constant than player kart
 
-options.aiPrefSpeed = 15000;
-
 export default class Enemy extends Kart {
 	constructor() {
 		super();
 		this.preferredDistance = Math.random() * 15 + 5;
 		this.lookAheadDistance = Math.random() * 15 + 5;
-		this.preferredSpeedSquared = Math.random() * options.aiPrefSpeed + 3600;
+		this.preferredSpeedSquared = Math.random() * 15000 + 3600;
 		if (cheats.meowmeowkart) {
 			this.preferredSpeedSquared = this.preferredSpeedSquared * 3 - 4000;
 			this.stonedSteering = (Math.random() * 2 - 1) * steer;
@@ -46,7 +44,7 @@ export default class Enemy extends Kart {
 				if (cheats.meowmeowkart) this.steering = this.stonedSteering;
 				// while (this.steering < Math.PI) this.steering += tau;
 				// this.steering %= tau;
-				this.drive = speedSquared < this.preferredSpeedSquared
+				this.drive = speedSquared < (this.preferredSpeedSquared * options.aiPrefSpeed)
 					? options.acceleration : 0;
 				this.brake = 1;
 				if (this.steering > steer) {

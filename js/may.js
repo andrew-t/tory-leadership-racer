@@ -2,6 +2,7 @@ import { Sprite } from './Sprite.js';
 import newspaper from './newspaper.js';
 import { karts, player } from './the-grid.js';
 import { scene, camera, beforeFrame } from './init.js';
+import { reset as resetTrees } from './trees.js';
 
 const may = new Sprite('res/may.png', 2);
 may.setSize(4);
@@ -37,6 +38,7 @@ beforeFrame((scene, camera) => {
 
 export default function start() {
 	console.log('Starting');
+	resetTrees();
 	document.body.classList.remove('char-select');
 	let i, hankyStart;
 	animationStart = Date.now();
