@@ -102,7 +102,7 @@ export class BlueShell extends BananaPeel {
 					kart: k,
 					pos: k.lastTheta + k.laps - k.unlaps
 				}))
-				.reduce((p, n) => (n.pos < p.pos) ? n : p)
+				.reduce((p, n) => (n.kart.active && (n.pos < p.pos)) ? n : p)
 				.kart,
 			theta = ((Math.atan2(this.position.z, this.position.x) + tau) / tau) % 1,
 			diff = ((lastKart.lastTheta - theta) + 1) % 1;

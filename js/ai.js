@@ -3,8 +3,9 @@ import { simpleParliamentDistance, simpleParliamentNormal } from './track.js';
 import Kart from './Kart.js';
 import options from './options.js';
 import cheats from './cheats.js';
+import { fire, randomItem } from './inventory.js';
 
-options.acceleration = 200; // faster than player kart
+options.acceleration = 120; // faster than player kart
 const reverseAcceleration = -60, // reverse faster than player kart
 	brakePower = 0.02, // stop faster than player kart
 	steer = 0.03, // handle better than player kart
@@ -15,7 +16,7 @@ export default class Enemy extends Kart {
 		super();
 		this.preferredDistance = Math.random() * 15 + 5;
 		this.lookAheadDistance = Math.random() * 15 + 5;
-		this.preferredSpeedSquared = Math.random() * 15000 + 3600;
+		this.preferredSpeedSquared = Math.random() * 12000 + 3600;
 		if (cheats.meowmeowkart) {
 			this.preferredSpeedSquared = this.preferredSpeedSquared * 3 - 4000;
 			this.stonedSteering = (Math.random() * 2 - 1) * steer;
@@ -24,7 +25,7 @@ export default class Enemy extends Kart {
 		this.steeriness = Math.random() * 0.6 + 0.2;
 		this.steerSpriteEffect = 0.001;
 
-		onFrame(() => {
+		onFrame((scene, camera, delta) => {
 			const pos = { x: this.position.x, y: this.position.z },
 				left = simpleParliamentNormal(pos),
 				forwards = { x: -left.y, y: left.x },
@@ -67,6 +68,9 @@ export default class Enemy extends Kart {
 				this.position.x += n.x * (2 - distance);
 				this.position.z += n.y * (2 - distance);
 			}
+			// weapons!
+			if (Math.random() < delta * 0.05)
+				fire(randomItem(), this);
 		});
 	}
 }
