@@ -423,10 +423,10 @@ input[type=range]:focus::-ms-fill-upper {
 	background-position: 50% 50%;
 	background-size: 15vmin 15vmin;
 }
-#fire-button.bubble { background-image: url('../res/bubble.png'); }
-#fire-button.milkshake { background-image: url('../res/milkshake3.png'); }
-#fire-button.cannon { background-image: url('../res/cannonball.png'); }
-#fire-button.blue-shell { background-image: url('../res/blue-shell.png'); }
+#fire-button.bubble { background-image: url('res/bubble.png'); }
+#fire-button.milkshake { background-image: url('res/milkshake3.png'); }
+#fire-button.cannon { background-image: url('res/cannonball.png'); }
+#fire-button.blue-shell { background-image: url('res/blue-shell.png'); }
 
 div.item {
 	display: grid;
