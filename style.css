@@ -411,7 +411,7 @@ input[type=range]:focus::-ms-fill-upper {
 	height: 20vmin;
 	top: 5vmin;
 	right: 5vmin;
-	border: 1vmin solid black;
+	border: 1vmin solid white;
 	background: rgba(0, 0, 0, 0.5);
 	opacity: 1;
 	background-repeat: no-repeat;

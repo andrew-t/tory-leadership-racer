@@ -35,7 +35,10 @@ export class BananaPeel extends Sprite {
 			}
 			const pos = { x: this.position.x, y: this.position.z },
 				d = parliamentDistance(pos);
-			if (d < 0) this.onHitParliament(pos, d);
+			if (d < 0) {
+				console.log(owner.character.name + '\'s item hit Parliament');
+				this.onHitParliament(pos, d);
+			}
 		};
 		onFrame(_onFrame);
 	}
@@ -48,7 +51,7 @@ export class BananaPeel extends Sprite {
 class GreenShell extends BananaPeel {
 	constructor(filename, speed, kart, bouncy) {
 		super(filename, kart);
-		this.speed = speed;
+		this.speed = addVec(kart.lastSpeed, speed);
 		this.bouncy = bouncy;
 		const s = 2 / Math.sqrt(dot(speed, speed));
 		this.position.set(
@@ -75,16 +78,16 @@ class GreenShell extends BananaPeel {
 
 export function milkshake(kart) {
 	new GreenShell('res/milkshake3.png',
-		addVec(kart.speed, vecByScal(kart.forward, 20)),
+		vecByScal(kart.forward, 50),
 		kart, false);
 }
 
 export function cannonade(kart) {
 	new GreenShell('res/cannonball.png',
-		addVec(kart.speed, vecByScal(kart.left, 10)),
+		vecByScal(kart.left, 50),
 		kart, true);
 	new GreenShell('res/cannonball.png',
-		addVec(kart.speed, vecByScal(kart.left, -10)),
+		vecByScal(kart.left, -50),
 		kart, true);
 }
 
@@ -103,19 +106,19 @@ export class BlueShell extends BananaPeel {
 				.kart,
 			theta = ((Math.atan2(this.position.z, this.position.x) + tau) / tau) % 1,
 			diff = ((lastKart.lastTheta - theta) + 1) % 1;
-			if (diff > 0.2 && diff < 0.95) {
+			if (diff > 0.2 && diff < 0.9) {
 				// shell and player aren't too close, just zoom round the track
 				const pos = { x: this.position.x, y: this.position.z },
 					left = parliamentNormal(pos),
 					forwards = { x: -left.y, y: left.x };
-				this.position.x += forwards.x * delta * 40;
-				this.position.z += forwards.y * delta * 40;
+				this.position.x += forwards.x * delta * 150;
+				this.position.z += forwards.y * delta * 150;
 			} else {
 				// shell's pretty near to player, just home in
 				const { dx, dy, d2 } = distanceSquared(this, lastKart),
-					d = Math.sqrt(d2);
-				this.position.x += dx * 40 / d;
-				this.position.z += dy * 40 / d;
+					d = delta * 100 / Math.sqrt(d2);
+				this.position.x += dx * d;
+				this.position.z += dy * d;
 			}
 	}
 

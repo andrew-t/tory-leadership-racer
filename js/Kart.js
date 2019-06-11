@@ -74,10 +74,11 @@ export default class Kart extends DirectionalSprite {
 					this.drift * Math.pow(driftFriction, delta)));
 			// steering - kind of a turning circle but you can also spin slightly on the spot
 			if (this.active && !this.spinOutTime)
-				this.angle += this.steering * (1 + this.coast);
+				this.angle += this.steering * (1 + this.coast / 60);
 			// and finally movement
-			this.position.x += this.speed.x;
-			this.position.z += this.speed.y;
+			this.lastSpeed = this.speed;
+			this.position.x += this.speed.x * delta;
+			this.position.z += this.speed.y * delta;
 
 			if (this.spinOutTime)
 				this.steering = (this.spinOutTime / spinOutDuration)

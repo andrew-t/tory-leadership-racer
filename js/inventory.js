@@ -4,7 +4,7 @@ import { milkshake, cannonade, BlueShell } from './items.js';
 let inventoryButton;
 document.addEventListener('DOMContentLoaded', e => {
 	inventoryButton = document.getElementById('fire-button');
-	inventoryButton.addEventListener('click', fire);
+	inventoryButton.addEventListener('click', fireAsPlayer);
 });
 
 let currentInventory = null;

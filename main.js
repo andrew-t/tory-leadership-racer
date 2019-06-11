@@ -69,6 +69,9 @@ setInterval(() => {
 					${ k.name }<br />${ Math.max(round(k.pos), 0) } laps
 				</li>`)
 			.join('');
+	console.log('Player speed',
+		Math.sqrt(player.speed.x * player.speed.x
+			+ player.speed.y * player.speed.y));
 }, 1000);
 
 function round(n) {

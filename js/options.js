@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', e => {
 	update();
 	function update() {
 		const d = parseFloat(difficulty.value);
-		options.acceleration = defaults.acceleration + d * 0.75;
-		options.aiPrefSpeed = defaults.aiPrefSpeed + d * 1.0;
+		options.acceleration = defaults.acceleration + d * 45;
+		options.aiPrefSpeed = defaults.aiPrefSpeed + d * 10000;
 		options.treeCount = defaults.treeCount + d * 10.0;
 		if (d < -0.75)
 			difficultyLabel.innerHTML = 'Easiest trade deal in history';

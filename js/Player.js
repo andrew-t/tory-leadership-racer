@@ -5,9 +5,9 @@ import { parliamentDistance } from './track.js';
 import adjustLeaning from './leaning.js';
 import { fireAsPlayer } from './inventory.js';
 
-const acceleration = 0.6,
-	reverseAcceleration = -0.3,
-	brakePower = 0.1,
+const acceleration = 45,
+	reverseAcceleration = -30,
+	brakePower = 0.2,
 	steer = 0.008,
 	yAxis = new THREE.Vector3(0, 1, 0);
 
@@ -39,7 +39,7 @@ export default class Player extends Kart {
 		this.stillFrames = 0;
 
 		beforeFrame((scene, camera, delta) => {
-			if (this.coast > 0.01 || this.coast < -0.01)
+			if (this.coast > 0.6 || this.coast < -0.6)
 				this.stillFrames = 0;
 			else if (++this.stillFrames > 2) {
 				this.moving = false;
@@ -56,7 +56,7 @@ export default class Player extends Kart {
 				this.drive = this.accelerateButton.pressed ? acceleration : 0;
 			} else if (this.reversing) {
 				this.drive = this.brakeButton.pressed ? reverseAcceleration : 0;
-				this.brake = this.accelerateButton.pressed ? brakePower : acceleration;
+				this.brake = this.accelerateButton.pressed ? brakePower : 1;
 			} else {
 				if (this.accelerateButton.pressed
 					&& !this.accelerateButton.movingWhenPressed
@@ -84,7 +84,8 @@ export default class Player extends Kart {
 			this.lastFire = pad.fire;
 			this.lastY = pad.y;
 
-			this.steering = pad.stick.x * steer;
+			if (!this.spinOutTime)
+				this.steering = pad.stick.x * steer;
 			if (this.active) this.setCamera(camera);
 
 			if (pad.fire) fireAsPlayer();
@@ -104,7 +105,7 @@ export default class Player extends Kart {
 			this.driveVector()
 				.applyAxisAngle(yAxis,
 					Math.abs(pad.camStick.x) > 0.05 ? pad.camStick.x * 5 : 0)
-				.multiplyScalar(8));
+				.multiplyScalar(12));
 		camera.position.y = 2.5;
 		camera.lookAt(this.position);
 		camera.position.y += 1;
