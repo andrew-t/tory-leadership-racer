@@ -9,7 +9,8 @@ import contenders from './contenders.js';
 const coastFriction = 0.8,
 	driftFriction = 0.12,
 	tau = Math.PI * 2,
-	spinOutDuration = 0.8;
+	spinOutDuration = 2,
+	spinOutRotations = 3;
 
 let nextCharacter = 0;
 
@@ -80,7 +81,7 @@ export default class Kart extends DirectionalSprite {
 
 			if (this.spinOutTime)
 				this.steering = (this.spinOutTime / spinOutDuration)
-					* tau / this.steerSpriteEffect;
+					* tau * spinOutRotations / this.steerSpriteEffect;
 
 			// oh, and you can hit buildings
 			const pos = { x: this.position.x, y: this.position.z };
@@ -155,6 +156,7 @@ export default class Kart extends DirectionalSprite {
 
 	itemHit() {
 		console.log(this.character.name, 'is out for a spin!');
+		this.speed = vecByScal(this.speed, 0.2);
 		this.spinOutTime = spinOutDuration;
 	}
 }

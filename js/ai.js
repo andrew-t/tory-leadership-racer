@@ -41,24 +41,26 @@ export default class Enemy extends Kart {
 			else if (dDistance > 5) desiredAngle -= 0.3;
 			else desiredAngle -= dDistance * 0.2;
 			const dTheta = (desiredAngle - this.angle + tau * 5.5) % tau - Math.PI;
-			this.steering = dTheta * this.steeriness;
-			if (cheats.meowmeowkart) this.steering = this.stonedSteering;
-			// while (this.steering < Math.PI) this.steering += tau;
-			// this.steering %= tau;
-			this.drive = speedSquared < this.preferredSpeedSquared
-				? options.acceleration : 0;
-			this.brake = 1;
-			if (this.steering > steer) {
-				this.steering = steer;
-				if (speedSquared > this.preferredCorneringSpeedSquared) {
-					this.drive = 0;
-					this.brake = brakePower;
-				}
-			} else if (this.steering < -steer) {
-				this.steering = -steer;
-				if (speedSquared > this.preferredCorneringSpeedSquared) {
-					this.drive = 0;
-					this.brake = brakePower;
+			if (!this.spinOutTime) {
+				this.steering = dTheta * this.steeriness;
+				if (cheats.meowmeowkart) this.steering = this.stonedSteering;
+				// while (this.steering < Math.PI) this.steering += tau;
+				// this.steering %= tau;
+				this.drive = speedSquared < this.preferredSpeedSquared
+					? options.acceleration : 0;
+				this.brake = 1;
+				if (this.steering > steer) {
+					this.steering = steer;
+					if (speedSquared > this.preferredCorneringSpeedSquared) {
+						this.drive = 0;
+						this.brake = brakePower;
+					}
+				} else if (this.steering < -steer) {
+					this.steering = -steer;
+					if (speedSquared > this.preferredCorneringSpeedSquared) {
+						this.drive = 0;
+						this.brake = brakePower;
+					}
 				}
 			}
 			// hack to stop them getting caught on corners

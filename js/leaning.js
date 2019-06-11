@@ -53,7 +53,10 @@ onFrame(() => {
 	leftMeter.style.opacity = (leaning < -95)
 		? Math.sin(Date.now() * 0.01) * 0.5 + 0.5
 		: 1;
-	if (!player.active || karts.every(k => !k.active == !k.isPlayer)) return;
+	if (!player.active
+		|| karts.every(k => !k.active == !k.isPlayer)
+		|| player.bubbleTime)
+		return;
 	if (leaning > 99)
 		player.drive *= 0.3;
 	if (leaning < -99) {

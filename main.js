@@ -6,6 +6,7 @@ import { start as charSelect } from './js/char-select.js';
 import startRace, { music, gameOver } from './js/may.js';
 import { reset as resetTrees } from './js/trees.js';
 import { reset as resetLeaning } from './js/leaning.js';
+import { reset as resetInventory } from './js/inventory.js';
 import cheats from './js/cheats.js';
 
 newspaper('Tory leadership contest: Iain Duncan Smith warns of ‘chaos’', 5000);
@@ -94,6 +95,7 @@ function reset(e) {
 	resetKarts();
 	resetLeaning();
 	resetTrees();
+	resetInventory();
 	winScreen.classList.add('hidden');
 	loseScreen.classList.add('hidden');
 }
