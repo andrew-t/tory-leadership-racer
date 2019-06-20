@@ -35,11 +35,13 @@ karts.forEach(k => {
 		}
 		let n = 0;
 		for (const k of karts) if (k.laps >= laps) ++n;
-		if (n + laps == karts.length)
+		if (cheats.withers ? (laps == 5) : (n + laps == karts.length))
 			for (const k of karts)
 				if (k.active && k.laps < laps) {
 					k.active = false;
-					const lastLap = (laps == karts.length - 1);
+					const lastLap = cheats.withers
+						? (laps == 5)
+						: (laps == karts.length - 1);
 					newspaper(lastLap
 							? `${karts.find(k => k.active).character.name} BECOMES PRIME MINISTER`
 							: `${k.character.name} ELIMINATED IN ROUND ${laps}`,
