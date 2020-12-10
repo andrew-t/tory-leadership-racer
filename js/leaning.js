@@ -10,9 +10,10 @@ const leftMeter = document.getElementById('left-wing'),
 let leaning = 0;
 
 const maxNudge = 1,
-      centreLine = 0,
-      leftBuffer = 0.3,
-	mult = 2;
+	centreLine = 0,
+	leftBuffer = 0.3,
+	mult = 2,
+	correctionMult = 2;
 
 export function reset() {
 	leaning = 0;
@@ -28,6 +29,7 @@ export default function nudge(d) {
 		}
 		if (d > maxNudge) d = maxNudge;
 		if (d < -maxNudge) d = -maxNudge;
+		if (d * leaning < 0) d *= correctionMult;
 		leaning += d;
 		if (leaning > 100) leaning = 100;
 		if (leaning < -100) leaning = -100;
