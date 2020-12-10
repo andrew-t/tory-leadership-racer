@@ -9,9 +9,9 @@ const leftMeter = document.getElementById('left-wing'),
 
 let leaning = 0;
 
-const maxNudge = 2,
-      centreLine = -0.2,
-      leftBuffer = 0.5,
+const maxNudge = 1,
+      centreLine = 0,
+      leftBuffer = 0.3,
 	mult = 2;
 
 export function reset() {
