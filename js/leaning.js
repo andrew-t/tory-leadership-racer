@@ -10,6 +10,7 @@ const leftMeter = document.getElementById('left-wing'),
 let leaning = 0;
 
 const maxNudge = 2,
+      centreLine = -0.2,
       leftBuffer = 0.5,
 	mult = 2;
 
@@ -20,6 +21,7 @@ export function reset() {
 export default function nudge(d) {
 	if (player.active) {
 		d *= mult;
+		d -= centreLine;
 		if (d < 0) {
 			d += leftBuffer;
 			if (d > 0) d = 0;
