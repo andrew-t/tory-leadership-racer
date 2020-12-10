@@ -13,7 +13,8 @@ const maxNudge = 1,
 	centreLine = 0,
 	leftBuffer = 0.3,
 	mult = 2,
-	correctionMult = 2;
+	correctionMult = 2,
+	playerMaxSpeed = 50;
 
 export function reset() {
 	leaning = 0;
@@ -30,6 +31,12 @@ export default function nudge(d) {
 		if (d > maxNudge) d = maxNudge;
 		if (d < -maxNudge) d = -maxNudge;
 		if (d * leaning < 0) d *= correctionMult;
+		else {
+			const speed = Math.sqrt(player.speed.x * player.speed.x
+				+ player.speed.y * player.speed.y);
+			if (speed < playerMaxSpeed)
+				d *= speed / playerMaxSpeed;
+		}
 		leaning += d;
 		if (leaning > 100) leaning = 100;
 		if (leaning < -100) leaning = -100;
